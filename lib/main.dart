@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:time_saver/Blocks/AppBar.dart';
+import 'package:time_saver/Blocks/Category.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 void main() {
@@ -8,10 +9,11 @@ void main() {
 
 late List<GDPData> _chartData;
 class GDPData{
-  GDPData(this.continent, this.gdp, this.colors);
-  final String continent;
+  GDPData(this.categoryTitle, this.gdp, this.colors, this.type);
+  final String categoryTitle;
   final int gdp;
   final Color colors;
+  final String type;
 }
 
 class MyApp extends StatelessWidget {
@@ -39,14 +41,17 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
-  List<GDPData> getCharData(){
+  List<GDPData> getCharData() {
     final List<GDPData> chartData = [
-      GDPData('Oceania', 2600, Colors.greenAccent),
-      GDPData('Africa', 1500, Colors.yellow),
-      GDPData('S America', 2388, Colors.blue),
-      GDPData('Europe', 23000, Colors.deepPurpleAccent),
-      GDPData('N America', 25000, Colors.green),
-      GDPData('Asia', 28000, Colors.pinkAccent)
+      GDPData('Category 1', 2600, Colors.greenAccent, 'useful'),
+      GDPData('Category 2', 1500, Colors.yellow, 'wasted'),
+      GDPData('Category 3', 2388, Colors.blue, 'useful'),
+      GDPData('Category 4', 16000, Colors.deepPurpleAccent, 'useful'),
+      GDPData('Category 5', 18000, Colors.green, 'rest'),
+      GDPData('Category 6', 8000, Colors.brown, 'wasted'),
+      GDPData('Category 7', 6000, Colors.cyanAccent, 'wasted'),
+      GDPData('Category 8', 1000, Colors.orangeAccent, 'rest'),
+      GDPData('Category 9', 12000, Colors.teal, 'rest')
     ];
     return chartData;
   }
@@ -69,81 +74,33 @@ class _MainPageState extends State<MainPage> {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-                child: Column(
-                  children: [
-                    Text('Category'),
-                    SizedBox(height: 10),
-                    Container(
-                      width: 50, height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.purpleAccent,
-                      ),
-                      child: Icon(Icons.star, color: Colors.white,),
-                    ),
-                    SizedBox(height: 5),
-                    Text('00:00', style: TextStyle(fontWeight: FontWeight.w600),)
-                  ],
-                )
+          children: const [
+            Category(
+                categoryColor: Color(0xffc82aec),
+                categoryTitle: "Category 1",
+                categoryTime: 4746,
+                categoryIcon: Icon(Icons.star, color: Colors.white)
             ),
-            SizedBox(width: 40),
-            Container(
-                child: Column(
-                  children: [
-                    Text('Category'),
-                    SizedBox(height: 10),
-                    Container(
-                      width: 50, height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.deepPurple,
-                      ),
-                      child: Icon(Icons.anchor, color: Colors.white,),
-                    ),
-                    SizedBox(height: 5),
-                    Text('00:00', style: TextStyle(fontWeight: FontWeight.w600),)
-                  ],
-                )
+            SizedBox(width: 5),
+            Category(
+                categoryColor: Color(0xff6d35d0),
+                categoryTitle: "Category 2",
+                categoryTime: 0,
+                categoryIcon: Icon(Icons.anchor, color: Colors.white)
             ),
-            SizedBox(width: 40),
-            Container(
-                child: Column(
-                  children: [
-                    Text('Category'),
-                    SizedBox(height: 10),
-                    Container(
-                      width: 50, height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.brown,
-                      ),
-                      child: Icon(Icons.add_business_rounded, color: Colors.white,),
-                    ),
-                    SizedBox(height: 5),
-                    Text('08:00', style: TextStyle(fontWeight: FontWeight.w600),)
-                  ],
-                )
+            SizedBox(width: 5),
+            Category(
+                categoryColor: Color(0xff5c4141),
+                categoryTitle: "Category 3",
+                categoryTime: 1110,
+                categoryIcon: Icon(Icons.add_business_rounded, color: Colors.white)
             ),
-            SizedBox(width: 40),
-            Container(
-                child: Column(
-                  children: [
-                    Text('Category'),
-                    SizedBox(height: 10),
-                    Container(
-                      width: 50, height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.deepOrangeAccent,
-                      ),
-                      child: Icon(Icons.vpn_lock, color: Colors.white,),
-                    ),
-                    SizedBox(height: 5),
-                    Text('00:14', style: TextStyle(fontWeight: FontWeight.w600),)
-                  ],
-                )
+            SizedBox(width: 5),
+            Category(
+                categoryColor: Color(0xffe79818),
+                categoryTitle: "Category 4",
+                categoryTime: 200,
+                categoryIcon: Icon(Icons.vpn_lock, color: Colors.white)
             ),
           ],
         ),
@@ -153,56 +110,32 @@ class _MainPageState extends State<MainPage> {
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    child: Column(
-                      children: [
-                        Text('Category'),
-                        SizedBox(height: 10),
-                        Container(
-                          width: 50, height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            color: Colors.deepPurple,
-                          ),
-                          child: Icon(Icons.ac_unit, color: Colors.white,),
-                        ),
-                        SizedBox(height: 5),
-                        Text('01:10', style: TextStyle(fontWeight: FontWeight.w600),)
-                      ],
-                    )
+              children: const [
+                Category(
+                    categoryColor: Color(0xff7049dc),
+                    categoryTitle: "Category 5",
+                    categoryTime: 0,
+                    categoryIcon: Icon(Icons.ac_unit, color: Colors.white)
                 ),
-                SizedBox(height: 25),
-                Container(
-                    child: Column(
-                      children: [
-                        Text('Category'),
-                        SizedBox(height: 10),
-                        Container(
-                          width: 50, height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            color: Colors.green,
-                          ),
-                          child: Icon(Icons.account_balance, color: Colors.white,),
-                        ),
-                        SizedBox(height: 5),
-                        Text('00:45', style: TextStyle(fontWeight: FontWeight.w600),)
-                      ],
-                    )
-                )
+                SizedBox(height: 15),
+                Category(
+                    categoryColor: Color(0xff2aa83a),
+                    categoryTitle: "Category 6",
+                    categoryTime: 0,
+                    categoryIcon: Icon(Icons.account_balance, color: Colors.white)
+                ),
               ],
             ),
             Container(
-              width: 240,
-              height: 240,
+              width: 207,
+              height: 207,
               child: Stack(
                 children: [
                   SfCircularChart(
                     series: <CircularSeries>[
                       DoughnutSeries<GDPData, String>(
                           dataSource: _chartData,
-                          xValueMapper: (GDPData data, _) => data.continent,
+                          xValueMapper: (GDPData data, _) => data.categoryTitle,
                           yValueMapper: (GDPData data, _) => data.gdp,
                           pointColorMapper: (GDPData data, _) => data.colors,
                           dataLabelSettings: DataLabelSettings(isVisible: false),
@@ -249,44 +182,20 @@ class _MainPageState extends State<MainPage> {
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    child: Column(
-                      children: [
-                        Text('Category'),
-                        SizedBox(height: 10),
-                        Container(
-                          width: 50, height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            color: Colors.blue,
-                          ),
-                          child: Icon(Icons.adb, color: Colors.white,),
-                        ),
-                        SizedBox(height: 5),
-                        Text('00:25', style: TextStyle(fontWeight: FontWeight.w600),)
-                      ],
-                    )
+              children: const [
+                Category(
+                    categoryColor: Color(0xff2c88c6),
+                    categoryTitle: "Category 7",
+                    categoryTime: 0,
+                    categoryIcon: Icon(Icons.adb, color: Colors.white)
                 ),
-                SizedBox(height: 25),
-                Container(
-                    child: Column(
-                      children: [
-                        Text('Category'),
-                        SizedBox(height: 10),
-                        Container(
-                          width: 50, height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            color: Colors.red,
-                          ),
-                          child: Icon(Icons.build, color: Colors.white,),
-                        ),
-                        SizedBox(height: 5),
-                        Text('00:20', style: TextStyle(fontWeight: FontWeight.w600),)
-                      ],
-                    )
-                )
+                SizedBox(height: 15),
+                Category(
+                    categoryColor: Color(0xffe22929),
+                    categoryTitle: "Category 8",
+                    categoryTime: 300,
+                    categoryIcon: Icon(Icons.build, color: Colors.white)
+                ),
               ],
             ),
           ],
@@ -294,81 +203,33 @@ class _MainPageState extends State<MainPage> {
         SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-                child: Column(
-                  children: [
-                    Text('Category'),
-                    SizedBox(height: 10),
-                    Container(
-                      width: 50, height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.pinkAccent,
-                      ),
-                      child: Icon(Icons.ac_unit, color: Colors.white,),
-                    ),
-                    SizedBox(height: 5),
-                    Text('03:20', style: TextStyle(fontWeight: FontWeight.w600),)
-                  ],
-                )
+          children: const [
+            Category(
+              categoryColor: Color(0xffe719d2),
+              categoryTitle: "Category 9",
+              categoryTime: 9542,
+              categoryIcon: Icon(Icons.ac_unit, color: Colors.white)
             ),
-            SizedBox(width: 40),
-            Container(
-                child: Column(
-                  children: [
-                    Text('Category'),
-                    SizedBox(height: 10),
-                    Container(
-                      width: 50, height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.greenAccent,
-                      ),
-                      child: Icon(Icons.visibility, color: Colors.white,),
-                    ),
-                    SizedBox(height: 5),
-                    Text('00:18', style: TextStyle(fontWeight: FontWeight.w600),)
-                  ],
-                )
+            SizedBox(width: 5),
+            Category(
+                categoryColor: Color(0xff3ae785),
+                categoryTitle: "Category 10",
+                categoryTime: 4299,
+                categoryIcon: Icon(Icons.visibility, color: Colors.white)
             ),
-            SizedBox(width: 40),
-            Container(
-                child: Column(
-                  children: [
-                    Text('Category'),
-                    SizedBox(height: 10),
-                    Container(
-                      width: 50, height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.purpleAccent,
-                      ),
-                      child: Icon(Icons.apartment_outlined, color: Colors.white,),
-                    ),
-                    SizedBox(height: 5),
-                    Text('00:25', style: TextStyle(fontWeight: FontWeight.w600),)
-                  ],
-                )
+            SizedBox(width: 5),
+            Category(
+                categoryColor: Color(0xffffdc00),
+                categoryTitle: "Category 11",
+                categoryTime: 3299,
+                categoryIcon: Icon(Icons.visibility, color: Colors.white)
             ),
-            SizedBox(width: 40),
-            Container(
-                child: Column(
-                  children: [
-                    Text('Category'),
-                    SizedBox(height: 10),
-                    Container(
-                      width: 50, height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.yellow,
-                      ),
-                      child: Icon(Icons.agriculture_sharp, color: Colors.white,),
-                    ),
-                    SizedBox(height: 5),
-                    Text('02:05', style: TextStyle(fontWeight: FontWeight.w600),)
-                  ],
-                )
+            SizedBox(width: 5),
+            Category(
+                categoryColor: Color(0xff38955d),
+                categoryTitle: "Category 12",
+                categoryTime: 0,
+                categoryIcon: Icon(Icons.agriculture, color: Colors.white)
             ),
           ],
         ),

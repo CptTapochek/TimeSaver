@@ -58,7 +58,8 @@ class AppBarContent extends StatelessWidget {
                       )),
                       Icon(Icons.arrow_drop_down_sharp, size: 25)
                     ],
-                  )),
+                  )
+              ),
               IconButton(onPressed: editCategories, icon: Icon(Icons.arrow_forward_ios), color: Colors.white),
             ],
           ),
