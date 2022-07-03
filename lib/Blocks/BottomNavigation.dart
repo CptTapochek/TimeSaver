@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
 
 
-class BottomBarNavigation{
-  const BottomBarNavigation({Key? key}) : super(key: key);
+class BottomBarNavigation extends StatefulWidget{
+  const BottomBarNavigation({Key? key, required this.selectedIndex}) : super(key: key);
+
+  final int selectedIndex;
+
+  @override
+  State<StatefulWidget> createState() => BottomBarNavigationState();
+}
+
+class BottomBarNavigationState extends State<BottomBarNavigation>{
+  var selectedIndex = 1;
+
+  void getBottomTap(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    bottomNavigationBar: BottomNavigationBar(
+    return BottomNavigationBar(
       selectedFontSize: 14,
-      onTap: _getBottomTap,
-      currentIndex: _selectedIndex,
+      onTap: getBottomTap,
+      currentIndex: selectedIndex,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.history_rounded),
@@ -24,6 +39,6 @@ class BottomBarNavigation{
           label: 'Overview',
         ),
       ],
-    ),
+    );
   }
 }

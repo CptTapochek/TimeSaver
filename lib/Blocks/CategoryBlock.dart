@@ -30,26 +30,42 @@ class Category extends StatelessWidget {
       }
     }
 
+    var screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
         child: TextButton( onPressed: categoryPress,
           child: Column(
             children: [
-              Container(
-                width: 80,
-                child: Center(child: Text(categoryTitle)),
+              SizedBox(
+                width: screenWidth * 0.2,
+                child: Center(
+                    child: Text(
+                    categoryTitle,
+                    style: TextStyle(
+                      color: Colors.grey[900],
+                      fontWeight: FontWeight.w400,
+                      fontSize: screenWidth * 0.036
+                    ),
+                  )
+                ),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Container(
-                width: 50, height: 50,
+                width: screenWidth * 0.13, height: screenWidth * 0.13,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
+                  borderRadius: BorderRadius.circular(50),
                   color: categoryColor,
                 ),
                 child: categoryIcon,
               ),
-              SizedBox(height: 5),
-              Text('${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes',
-                style: TextStyle(fontWeight: FontWeight.w600),
+              const SizedBox(height: 5),
+              Text(
+                '${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: categoryColor,
+                  fontSize: screenWidth * 0.036
+                ),
               )
             ],
           ),
