@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:time_saver/Blocks/addTime.dart';
 
-void categoryPress(){
-  print('This is the category!');
-}
 
 class Category extends StatelessWidget {
   const Category({Key? key,
@@ -33,20 +31,30 @@ class Category extends StatelessWidget {
     var screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-        child: TextButton( onPressed: categoryPress,
+        child: TextButton(
+          onPressed: () {
+            Scaffold.of(context).showBottomSheet<void>(
+                (BuildContext context){
+                  return BottomSheetAddTime(context);
+                }
+            );
+          },
           child: Column(
             children: [
               SizedBox(
                 width: screenWidth * 0.2,
                 child: Center(
-                    child: Text(
-                    categoryTitle,
-                    style: TextStyle(
-                      color: Colors.grey[900],
-                      fontWeight: FontWeight.w400,
-                      fontSize: screenWidth * 0.036
-                    ),
-                  )
+                    child: RichText(
+                      overflow: TextOverflow.ellipsis,
+                      text: TextSpan(
+                        text: categoryTitle,
+                        style: TextStyle(
+                            color: Colors.grey[900],
+                            fontWeight: FontWeight.w400,
+                            fontSize: screenWidth * 0.036
+                        ),
+                      ),
+                    )
                 ),
               ),
               const SizedBox(height: 5),

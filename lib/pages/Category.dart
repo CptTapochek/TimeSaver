@@ -2,6 +2,66 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:time_saver/Blocks/CategoryBlock.dart';
 
+/* Test categories data */
+List data = [
+  {
+    "category_1":{
+      "title": "Rutina",
+      "time": 2600,
+      "color": Color(0xffc82aec),
+      "icon": Icons.star,
+      "type": "wasted"
+    },
+    "category_2":{
+      "title": "Serial/Films",
+      "time": 1500,
+      "color": Color(0xff6d35d0),
+      "icon": Icons.add_alarm,
+      "type": "rest"
+    },
+    "category_3":{
+      "title": "Work",
+      "time": 5212,
+      "color": Color(0xff5c4141),
+      "icon": Icons.remove_red_eye,
+      "type": "useful"
+    },
+    "category_4":{
+      "title": "Projects",
+      "time": 0,
+      "color": Color(0xffe79818),
+      "icon": Icons.ac_unit,
+      "type": "useful"
+    },
+    "category_5":{
+      "title": "Extra study",
+      "time": 498,
+      "color": Color(0xff4997dc),
+      "icon": Icons.food_bank,
+      "type": "useful"
+    },
+    "category_6":{
+      "title": "Sleep",
+      "time": 9000,
+      "color": Color(0xffb90e36),
+      "icon": Icons.adb,
+      "type": "rest"
+    },
+    "category_7":{
+      "title": "",
+      "time": 4433,
+      "color": Color(0xff37af47),
+      "icon": Icons.account_balance,
+      "type": "useful"
+    },
+    "category_8": null,
+    "category_9": null,
+    "category_10": null,
+    "category_11": null,
+    "category_12": null,
+  }
+];
+
 
 late List<GDPData> _chartData;
 
@@ -28,15 +88,13 @@ class CategoryPageState extends State<CategoryPage>{
 
   List<GDPData> getCharData() {
     final List<GDPData> chartData = [
-      GDPData('Category 1', 2600, Colors.greenAccent, 'useful'),
-      GDPData('Category 2', 1500, Colors.yellow, 'wasted'),
-      GDPData('Category 3', 2388, Colors.blue, 'useful'),
-      GDPData('Category 4', 16000, Colors.deepPurpleAccent, 'useful'),
-      GDPData('Category 5', 18000, Colors.green, 'rest'),
-      GDPData('Category 6', 8000, Colors.brown, 'wasted'),
-      GDPData('Category 7', 6000, Colors.cyanAccent, 'wasted'),
-      GDPData('Category 8', 1000, Colors.orangeAccent, 'rest'),
-      GDPData('Category 9', 12000, Colors.teal, 'rest')
+      for(int idx = 1; idx <= data[0].length; idx++)
+        GDPData(
+            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["title"] : "",
+            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["time"] : 0,
+            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["color"] : Colors.transparent,
+            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["type"] : ""
+        ),
     ];
     return chartData;
   }
@@ -51,62 +109,106 @@ class CategoryPageState extends State<CategoryPage>{
   Widget build(BuildContext context){
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${screenWidth} ${screenHeight}");
+    bool limit = false;
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>$screenWidth $screenHeight");
+
+    /* Get type of time */
+    String timeType(type){
+      num timeStamp = 0;
+      String time = "00:00";
+      var minutes = 0, hours = 0;
+
+      for(var timeIDX = 1; timeIDX <= data[0].length; timeIDX++){
+        if(data[0]["category_$timeIDX"] != null){
+          if(data[0]["category_$timeIDX"]["type"] == type){
+            timeStamp += data[0]["category_$timeIDX"]["time"];
+          }
+        }
+      }
+      for(var i = 0; i < timeStamp; i++){
+        if(i % 60 == 0){
+          minutes++;
+          if(minutes % 60 == 0){
+            hours++;
+            minutes = 0;
+          }
+        }
+      }
+      time = '${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes';
+      return time;
+    }
+
+    /* Get the length of category block */
+    int categoryLength(blockPart){
+      int categoriesNum = 0;
+      switch(blockPart){
+        case 1:
+          if(data[0].length < 4){
+            limit = true;
+            categoriesNum = data[0].length;
+          } else {
+            categoriesNum = 4;
+          }
+          break;
+        case 2:
+          if(data[0].length < 6){
+            limit = true;
+            categoriesNum = data[0].length;
+          } else {
+            categoriesNum = 6;
+          }
+          break;
+        case 3:
+          if(data[0].length < 8){
+            limit = true;
+            categoriesNum = data[0].length;
+          } else {
+            categoriesNum = 8;
+          }
+          break;
+        case 4:
+          if(data[0].length < 12){
+            limit = true;
+            categoriesNum = data[0].length;
+          } else {
+            categoriesNum = 12;
+          }
+          break;
+      }
+      return categoriesNum;
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Category(
-                categoryColor: Color(0xffc82aec),
-                categoryTitle: "Category 1",
-                categoryTime: 4746,
-                categoryIcon: Icon(Icons.star, color: Colors.white)
-            ),
-            SizedBox(width: screenWidth * 0.007),
-            Category(
-                categoryColor: Color(0xff6d35d0),
-                categoryTitle: "Category 2",
-                categoryTime: 0,
-                categoryIcon: Icon(Icons.anchor, color: Colors.white)
-            ),
-            SizedBox(width: screenWidth * 0.007),
-            Category(
-                categoryColor: Color(0xff5c4141),
-                categoryTitle: "Category 3",
-                categoryTime: 1110,
-                categoryIcon: Icon(Icons.add_business_rounded, color: Colors.white)
-            ),
-            SizedBox(width: screenWidth * 0.007),
-            Category(
-                categoryColor: Color(0xffe79818),
-                categoryTitle: "Category 4",
-                categoryTime: 200,
-                categoryIcon: Icon(Icons.vpn_lock, color: Colors.white)
-            ),
+            for(var index = 1; index <= categoryLength(1); index++)
+              data[0]["category_$index"] != null ? Category(
+                categoryColor: data[0]["category_$index"]["color"],
+                categoryTitle: data[0]["category_$index"]["title"],
+                categoryTime: data[0]["category_$index"]["time"],
+                categoryIcon: Icon(data[0]["category_$index"]["icon"], color: Colors.white)
+            ) : Container(width: 20,height: 20, color: Colors.black,)
+            //SizedBox(width: screenWidth * 0.007),
           ],
         ),
-        SizedBox(height: screenHeight * 0.008),
+        SizedBox(height: screenHeight > 700 ? screenHeight * 0.008 : screenHeight * 0.008),
+        screenHeight > 650 ? SizedBox(height: screenHeight * 0.05,) : const SizedBox(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Category(
-                    categoryColor: Color(0xff7049dc),
-                    categoryTitle: "Category 5",
-                    categoryTime: 0,
-                    categoryIcon: Icon(Icons.ac_unit, color: Colors.white)
-                ),
-                SizedBox(height: screenHeight * 0.008),
-                Category(
-                    categoryColor: Color(0xff2aa83a),
-                    categoryTitle: "Category 6",
-                    categoryTime: 0,
-                    categoryIcon: Icon(Icons.account_balance, color: Colors.white)
-                ),
+                for(var index = 5; index <= categoryLength(2); index++)
+                  data[0]["category_$index"] != null ? Category(
+                      categoryColor: data[0]["category_$index"]["color"],
+                      categoryTitle: data[0]["category_$index"]["title"],
+                      categoryTime: data[0]["category_$index"]["time"],
+                      categoryIcon: Icon(data[0]["category_$index"]["icon"], color: Colors.white)
+                  ) : Container(width: 20,height: 20, color: Colors.black,)
               ],
             ),
             SizedBox(
@@ -154,7 +256,7 @@ class CategoryPageState extends State<CategoryPage>{
                                 Container(
                                   margin: const EdgeInsets.only(bottom: 1),
                                   child: Text(
-                                      '3:25',
+                                      timeType("useful"),
                                       style: TextStyle(
                                           color: Colors.green,
                                           fontSize: screenWidth * 0.05,
@@ -178,7 +280,7 @@ class CategoryPageState extends State<CategoryPage>{
                                 Container(
                                   margin: const EdgeInsets.only(bottom: 1),
                                   child: Text(
-                                      '5:14',
+                                      timeType("wasted"),
                                       style: TextStyle(
                                           color: Colors.redAccent,
                                           fontSize: screenWidth * 0.05,
@@ -202,7 +304,7 @@ class CategoryPageState extends State<CategoryPage>{
                                 Container(
                                   margin: const EdgeInsets.only(bottom: 1),
                                   child: Text(
-                                      '2:10',
+                                      timeType("rest"),
                                       style: TextStyle(
                                           color: Colors.orangeAccent,
                                           fontSize: screenWidth * 0.05,
@@ -222,24 +324,19 @@ class CategoryPageState extends State<CategoryPage>{
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Category(
-                    categoryColor: Color(0xff2c88c6),
-                    categoryTitle: "Category 7",
-                    categoryTime: 0,
-                    categoryIcon: Icon(Icons.adb, color: Colors.white)
-                ),
-                SizedBox(height: screenHeight > 650 ? 15 : 5),
-                Category(
-                    categoryColor: Color(0xffe22929),
-                    categoryTitle: "Category 8",
-                    categoryTime: 300,
-                    categoryIcon: Icon(Icons.build, color: Colors.white)
-                ),
+                for(var index = 7; index <= categoryLength(3); index++)
+                  data[0]["category_$index"] != null ? Category(
+                      categoryColor: data[0]["category_$index"]["color"],
+                      categoryTitle: data[0]["category_$index"]["title"],
+                      categoryTime: data[0]["category_$index"]["time"],
+                      categoryIcon: Icon(data[0]["category_$index"]["icon"], color: Colors.white)
+                  ) : Container(width: 20,height: 20, color: Colors.black,)
               ],
             ),
           ],
         ),
         SizedBox(height: screenHeight > 650 ? 15 : 5),
+        screenHeight > 650 ? SizedBox(height: screenHeight * 0.05,) : const SizedBox(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
