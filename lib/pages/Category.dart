@@ -48,7 +48,7 @@ List data = [
       "type": "rest"
     },
     "category_7":{
-      "title": "",
+      "title": "This",
       "time": 4433,
       "color": Color(0xff37af47),
       "icon": Icons.account_balance,
@@ -330,7 +330,28 @@ class CategoryPageState extends State<CategoryPage>{
                       categoryTitle: data[0]["category_$index"]["title"],
                       categoryTime: data[0]["category_$index"]["time"],
                       categoryIcon: Icon(data[0]["category_$index"]["icon"], color: Colors.white)
-                  ) : Container(width: 20,height: 20, color: Colors.black,)
+                  ) : TextButton(
+                    onPressed: () {},
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: screenWidth * 0.2,
+                          child: const Text(""),
+                        ),
+                        const SizedBox(height: 5),
+                        Container(
+                          width: screenWidth * 0.12, height: screenWidth * 0.12,
+                          decoration: BoxDecoration(
+                              color: const Color(0xffc2c2c2),
+                              borderRadius: BorderRadius.circular(50)
+                          ),
+                          child: Icon(Icons.add, color: Colors.white, size: screenWidth * 0.08,),
+                        ),
+                        const SizedBox(height: 5),
+                        const Text(""),
+                      ],
+                    )
+                  )
               ],
             ),
           ],

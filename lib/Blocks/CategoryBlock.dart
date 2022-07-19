@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:time_saver/Blocks/addTime.dart';
 
 
-class Category extends StatelessWidget {
+class Category extends StatefulWidget {
   const Category({Key? key,
     required this.categoryColor,
     required this.categoryTitle,
@@ -16,9 +16,28 @@ class Category extends StatelessWidget {
   final int categoryTime;
 
   @override
+  State<Category> createState() => CategoryState();
+}
+
+class CategoryState extends State<Category> {
+  var data = {};
+
+  @override
+  void initState(){
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    data = {
+      "color": widget.categoryColor,
+      "title": widget.categoryTitle,
+      "icon": widget.categoryIcon,
+      "time": widget.categoryTime
+    };
+
     int hours = 0, minutes = 0;
-    for(var i = 0; i < categoryTime; i++){
+    for(var i = 0; i < data["time"]; i++){
       if(i % 60 == 0){
         minutes++;
         if(minutes % 60 == 0){
@@ -33,8 +52,9 @@ class Category extends StatelessWidget {
     return Container(
         child: TextButton(
           onPressed: () {
-            Scaffold.of(context).showBottomSheet<void>(
-                (BuildContext context){
+            showModalBottomSheet<void>(
+              context: context,
+              builder: (BuildContext context){
                   return BottomSheetAddTime(context);
                 }
             );
@@ -47,7 +67,7 @@ class Category extends StatelessWidget {
                     child: RichText(
                       overflow: TextOverflow.ellipsis,
                       text: TextSpan(
-                        text: categoryTitle,
+                        text: data["title"],
                         style: TextStyle(
                             color: Colors.grey[900],
                             fontWeight: FontWeight.w400,
@@ -62,16 +82,16 @@ class Category extends StatelessWidget {
                 width: screenWidth * 0.13, height: screenWidth * 0.13,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
-                  color: categoryColor,
+                  color: data["color"],
                 ),
-                child: categoryIcon,
+                child: data["icon"],
               ),
               const SizedBox(height: 5),
               Text(
                 '${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  color: categoryColor,
+                  color: data["color"],
                   fontSize: screenWidth * 0.036
                 ),
               )
