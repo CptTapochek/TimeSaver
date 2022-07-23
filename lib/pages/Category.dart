@@ -9,49 +9,49 @@ List data = [
       "title": "Rutina",
       "time": 2600,
       "color": Color(0xffc82aec),
-      "icon": Icons.star,
+      "icon": "airdrop",
       "type": "wasted"
     },
     "category_2":{
       "title": "Serial/Films",
       "time": 1500,
       "color": Color(0xff6d35d0),
-      "icon": Icons.add_alarm,
+      "icon": "airplane",
       "type": "rest"
     },
     "category_3":{
       "title": "Work",
       "time": 5212,
       "color": Color(0xff5c4141),
-      "icon": Icons.remove_red_eye,
+      "icon": "brush",
       "type": "useful"
     },
     "category_4":{
       "title": "Projects",
       "time": 0,
       "color": Color(0xffe79818),
-      "icon": Icons.ac_unit,
+      "icon": "car",
       "type": "useful"
     },
     "category_5":{
       "title": "Extra study",
       "time": 498,
       "color": Color(0xff4997dc),
-      "icon": Icons.food_bank,
+      "icon": "glass",
       "type": "useful"
     },
     "category_6":{
       "title": "Sleep",
       "time": 9000,
       "color": Color(0xffb90e36),
-      "icon": Icons.adb,
+      "icon": "heart",
       "type": "rest"
     },
     "category_7":{
       "title": "This",
       "time": 4433,
       "color": Color(0xff37af47),
-      "icon": Icons.account_balance,
+      "icon": "game",
       "type": "useful"
     },
     "category_8": null,
@@ -189,7 +189,7 @@ class CategoryPageState extends State<CategoryPage>{
                 categoryColor: data[0]["category_$index"]["color"],
                 categoryTitle: data[0]["category_$index"]["title"],
                 categoryTime: data[0]["category_$index"]["time"],
-                categoryIcon: Icon(data[0]["category_$index"]["icon"], color: Colors.white)
+                categoryIcon: data[0]["category_$index"]["icon"]
             ) : Container(width: 20,height: 20, color: Colors.black,)
             //SizedBox(width: screenWidth * 0.007),
           ],
@@ -207,7 +207,7 @@ class CategoryPageState extends State<CategoryPage>{
                       categoryColor: data[0]["category_$index"]["color"],
                       categoryTitle: data[0]["category_$index"]["title"],
                       categoryTime: data[0]["category_$index"]["time"],
-                      categoryIcon: Icon(data[0]["category_$index"]["icon"], color: Colors.white)
+                      categoryIcon: data[0]["category_$index"]["icon"]
                   ) : Container(width: 20,height: 20, color: Colors.black,)
               ],
             ),
@@ -329,7 +329,7 @@ class CategoryPageState extends State<CategoryPage>{
                       categoryColor: data[0]["category_$index"]["color"],
                       categoryTitle: data[0]["category_$index"]["title"],
                       categoryTime: data[0]["category_$index"]["time"],
-                      categoryIcon: Icon(data[0]["category_$index"]["icon"], color: Colors.white)
+                      categoryIcon: data[0]["category_$index"]["icon"]
                   ) : TextButton(
                     onPressed: () {},
                     child: Column(
@@ -365,28 +365,28 @@ class CategoryPageState extends State<CategoryPage>{
                 categoryColor: Color(0xffe719d2),
                 categoryTitle: "Category 9",
                 categoryTime: 9542,
-                categoryIcon: Icon(Icons.ac_unit, color: Colors.white)
+                categoryIcon: "ship"
             ),
             SizedBox(width: screenWidth * 0.007),
             Category(
                 categoryColor: Color(0xff3ae785),
                 categoryTitle: "Category 10",
                 categoryTime: 4299,
-                categoryIcon: Icon(Icons.visibility, color: Colors.white)
+                categoryIcon: "moon"
             ),
             SizedBox(width: screenWidth * 0.007),
             Category(
                 categoryColor: Color(0xffffdc00),
                 categoryTitle: "Category 11",
                 categoryTime: 3299,
-                categoryIcon: Icon(Icons.visibility, color: Colors.white)
+                categoryIcon: "messages"
             ),
             SizedBox(width: screenWidth * 0.007),
             Category(
                 categoryColor: Color(0xff38955d),
                 categoryTitle: "Category 12",
                 categoryTime: 0,
-                categoryIcon: Icon(Icons.agriculture, color: Colors.white)
+                categoryIcon: "monitor"
             ),
           ],
         ),

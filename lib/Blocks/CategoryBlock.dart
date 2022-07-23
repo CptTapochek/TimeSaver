@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:time_saver/Blocks/addTime.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 
 class Category extends StatefulWidget {
@@ -12,7 +13,7 @@ class Category extends StatefulWidget {
 
   final Color categoryColor;
   final String categoryTitle;
-  final Icon categoryIcon;
+  final String categoryIcon;
   final int categoryTime;
 
   @override
@@ -55,7 +56,7 @@ class CategoryState extends State<Category> {
             showModalBottomSheet<void>(
               context: context,
               builder: (BuildContext context){
-                  return BottomSheetAddTime(context);
+                  return BottomSheetAddTime(context, data: data,);
                 }
             );
           },
@@ -84,7 +85,7 @@ class CategoryState extends State<Category> {
                   borderRadius: BorderRadius.circular(50),
                   color: data["color"],
                 ),
-                child: data["icon"],
+                child: SvgPicture.asset("assets/category-icons/${data["icon"]}.svg", height: 10, width: 10,),
               ),
               const SizedBox(height: 5),
               Text(
