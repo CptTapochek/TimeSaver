@@ -4,17 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 
 class Category extends StatefulWidget {
-  const Category({Key? key,
-    required this.categoryColor,
-    required this.categoryTitle,
-    required this.categoryIcon,
-    required this.categoryTime,
-  }) : super(key: key);
-
-  final Color categoryColor;
-  final String categoryTitle;
-  final String categoryIcon;
-  final int categoryTime;
+  const Category({Key? key, required this.data}) : super(key: key);
+  final Map<dynamic, dynamic> data;
 
   @override
   State<Category> createState() => CategoryState();
@@ -30,12 +21,7 @@ class CategoryState extends State<Category> {
 
   @override
   Widget build(BuildContext context) {
-    data = {
-      "color": widget.categoryColor,
-      "title": widget.categoryTitle,
-      "icon": widget.categoryIcon,
-      "time": widget.categoryTime
-    };
+    data = widget.data;
 
     int hours = 0, minutes = 0;
     for(var i = 0; i < data["time"]; i++){
@@ -85,7 +71,17 @@ class CategoryState extends State<Category> {
                   borderRadius: BorderRadius.circular(50),
                   color: data["color"],
                 ),
-                child: SvgPicture.asset("assets/category-icons/${data["icon"]}.svg", height: 10, width: 10,),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      child: Center(
+                        child: SvgPicture.asset("assets/category-icons/${data["icon"]}.svg",
+                          height: screenWidth * 0.07, width: screenWidth * 0.07, color: Colors.white
+                        ),
+                      )
+                    )
+                  ],
+                )
               ),
               const SizedBox(height: 5),
               Text(

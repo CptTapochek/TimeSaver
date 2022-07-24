@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:time_saver/Blocks/AppBar.dart';
-import 'Blocks/BottomNavigation.dart';
 import 'pages/Category.dart';
 
 
@@ -13,11 +12,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
-      home: const MainPage(),
+    return const MaterialApp(
+      home: MainPage(),
     );
   }
 }
@@ -31,6 +27,8 @@ class MainPage extends StatefulWidget {
 
 
 class MainPageState extends State<MainPage> {
+  Color mainColor = const Color(0xff5c6ac0);
+
   @override
   void initState(){
     super.initState();
@@ -42,7 +40,9 @@ class MainPageState extends State<MainPage> {
       'Index 0: History',
       style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
     ),
-    CategoryPage(),
+    Scrollbar(
+      child: const CategoryPage(),
+    ),
     const Text(
       'Index 2: Overview',
       style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
@@ -61,16 +61,18 @@ class MainPageState extends State<MainPage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(100),
         child: Container(
-          decoration: const BoxDecoration(
-            color: Colors.deepPurple,
+          decoration: BoxDecoration(
+            color: mainColor,
           ),
-          child: const AppBarContent(),
+          child: AppBarContent(mainColor: mainColor),
         ),
       ),
       body: Center(
         child: _widgetOptions.elementAt(selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: mainColor,
+        unselectedItemColor: const Color(0xffa8a8a8),
         selectedFontSize: 14,
         onTap: getBottomTap,
         currentIndex: selectedIndex,

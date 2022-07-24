@@ -4,16 +4,24 @@ void editCategories(){
   print('Edit categories');
 }
 
-final ButtonStyle elevatedBtnStyle = ElevatedButton.styleFrom(
-  elevation: 0.0,
-  shadowColor: Colors.transparent,
-);
+class AppBarContent extends StatefulWidget {
+  const AppBarContent({Key? key, required this.mainColor}) : super(key: key);
+  final Color mainColor;
 
-class AppBarContent extends StatelessWidget {
-  const AppBarContent({Key? key}) : super(key: key);
+  @override
+  State<AppBarContent> createState() => AppBarContentState();
+}
+
+class AppBarContentState extends State<AppBarContent> {
+  @override
+  void initState(){
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    Color mainColor = widget.mainColor;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -34,7 +42,13 @@ class AppBarContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               const IconButton(onPressed: editCategories, icon: Icon(Icons.arrow_back_ios), color: Colors.white),
-              ElevatedButton(onPressed: editCategories, style: elevatedBtnStyle,
+              ElevatedButton(
+                  onPressed: editCategories,
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0.0,
+                      primary: mainColor,
+                      shadowColor: Colors.transparent
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -42,11 +56,10 @@ class AppBarContent extends StatelessWidget {
                         padding: const EdgeInsets.all(3),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(2.5),
-                          //border: Border.all(width: 1, color: Colors.white),
                           color: Colors.white,
                         ),
-                        child: const Text('30', style: TextStyle(
-                            fontSize: 16, color: Colors.deepPurple
+                        child: Text('30', style: TextStyle(
+                            fontSize: 16, color: mainColor
                         )),
                       ),
                       const SizedBox(width: 5),
@@ -54,9 +67,7 @@ class AppBarContent extends StatelessWidget {
                           fontSize: 17
                       )),
                       const SizedBox(width: 5),
-                      const Text('2022', style: TextStyle(
-                          fontSize: 17
-                      )),
+                      const Text('2022', style: TextStyle(fontSize: 17)),
                       const Icon(Icons.arrow_drop_down_sharp, size: 25)
                     ],
                   )
