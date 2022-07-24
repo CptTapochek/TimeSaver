@@ -24,54 +24,124 @@ class AddTimeState extends State<BottomSheetAddTime> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
+    getTime(time){
+      int hours = 0, minutes = 0;
+      for(var i = 0; i < time; i++){
+        if(i % 60 == 0){
+          minutes++;
+          if(minutes % 60 == 0){
+            hours++;
+            minutes = 0;
+          }
+        }
+      }
+      return "${hours < 10 ? '0' : ''}${hours.toString()}:${minutes < 10 ? '0' : ''}${minutes.toString()}";
+    }
+
+    getScreenLoadingWidth(){
+      double width = 0.0;
+
+      if(data["limit"] == true){
+        if(data["min"] > 0){
+          if(data["time"] <= data["max"]){
+            width = screenWidth * data["time"]/data["min"];
+          }else{
+            width = screenWidth * data["time"]/data["max"];
+          }
+        }else{
+          width = screenWidth * data["time"]/data["max"];
+        }
+      }else{
+        width = screenWidth;
+      }
+      return width;
+    }
+
     return Container(
       height: screenHeight * 0.7,
       color: Colors.transparent,
-      child: Column(
+      child: Stack(
         children: [
-          Container(
-            height: screenHeight * 0.1,
-            color: data["color"],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
+          Positioned(
+            child: Column(
               children: [
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      height: 1.4
-                    ),
-                    text: "To category \n",
-                    children: [
-                      TextSpan(
-                        text: data["title"],
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold
-                        )
-                      )
-                    ]
-                  ),
-                ),
                 Container(
-                  width: screenWidth * 0.13, height: screenWidth * 0.13,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.white
-                  ),
-                  child: Stack(
+                  height: screenHeight * 0.1,
+                  color: data["color"],
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Positioned(
-                        child: Center(
-                          child: SvgPicture.asset("assets/category-icons/${data["icon"]}.svg",
-                            height: screenWidth * 0.07, width: screenWidth * 0.07, color: data["color"]
+                      Container(
+                        margin: const EdgeInsets.only(left: 15),
+                        child: RichText(
+                          text: TextSpan(
+                              style: const TextStyle(height: 1.4),
+                              text: "Range \n",
+                              children: [
+                                TextSpan(
+                                    text: data["limit"] ? "${getTime(data["min"])} - ${getTime(data["max"])}" : "None",
+                                    style: const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold
+                                    )
+                                )
+                              ]
                           ),
                         ),
+                      ),
+                      const Spacer(),
+                      Container(
+                        width: data["title"].length > 12 ? screenWidth * 0.35 :
+                        data["title"].length > 9 ? screenWidth * 0.3 : screenWidth * 0.23,
+                        margin: const EdgeInsets.only(right: 5),
+                        child: RichText(
+                          overflow: TextOverflow.ellipsis,
+                          text: TextSpan(
+                              style: const TextStyle(height: 1.4),
+                              text: "To category \n",
+                              children: [
+                                TextSpan(
+                                    text: data["title"],
+                                    style: const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold
+                                    )
+                                )
+                              ]
+                          ),
+                        ),
+                      ),
+                      Container(
+                          margin: const EdgeInsets.only(right: 15),
+                          width: screenWidth * 0.13, height: screenWidth * 0.13,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: Colors.white
+                          ),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                child: Center(
+                                  child: SvgPicture.asset("assets/category-icons/${data["icon"]}.svg",
+                                      height: screenWidth * 0.07, width: screenWidth * 0.07, color: data["color"]
+                                  ),
+                                ),
+                              )
+                            ],
+                          )
                       )
                     ],
-                  )
+                  ),
                 )
               ],
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            child: Container(
+              height: 10, width: getScreenLoadingWidth(),
+              color: Colors.green,
             ),
           )
         ],
