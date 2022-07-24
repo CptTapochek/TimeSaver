@@ -40,8 +40,8 @@ class MainPageState extends State<MainPage> {
       'Index 0: History',
       style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
     ),
-    Scrollbar(
-      child: const CategoryPage(),
+    const SingleChildScrollView(
+      child: CategoryPage()
     ),
     const Text(
       'Index 2: Overview',
@@ -67,9 +67,7 @@ class MainPageState extends State<MainPage> {
           child: AppBarContent(mainColor: mainColor),
         ),
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(selectedIndex),
-      ),
+      body: _widgetOptions.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: mainColor,
         unselectedItemColor: const Color(0xffa8a8a8),

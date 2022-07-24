@@ -60,18 +60,53 @@ List data = [
       "max": 30700
     },
     "category_7":{
-      "title": "This",
+      "title": "Games",
       "time": 4433,
       "color": Color(0xff37af47),
       "icon": "game",
+      "type": "rest",
+      "limit": true,
+      "min": 0,
+      "max": 7200
+    },
+    "category_8":{
+      "title": "Friends/Family",
+      "time": 0,
+      "color": Color(0xffa3af37),
+      "icon": "lamp",
+      "type": "rest",
+      "limit": true,
+      "min": 0,
+      "max": 7200
+    },
+    "category_9":{
+      "title": "YouTube",
+      "time": 4433,
+      "color": Color(0xffe15353),
+      "icon": "youtube",
+      "type": "rest",
+      "limit": true,
+      "min": 0,
+      "max": 7200
+    },
+    "category_10":{
+      "title": "Sport",
+      "time": 4433,
+      "color": Color(0xff31b9ae),
+      "icon": "ship",
       "type": "useful",
       "limit": false,
     },
-    "category_8": null,
-    "category_9": null,
-    "category_10": null,
     "category_11": null,
     "category_12": null,
+    "category_13": null,
+    "category_14": null,
+    "category_15": null,
+    "category_16": null,
+    "category_17": null,
+    "category_18": null,
+    "category_19": null,
+    "category_20": null,
   }
 ];
 
@@ -102,6 +137,13 @@ class CategoryPageState extends State<CategoryPage>{
   List<GDPData> getCharData() {
     final List<GDPData> chartData = [
       for(int idx = 1; idx <= data[0].length; idx++)
+        idx == 1 && data[0]["category_$idx"] == null ?
+        GDPData(
+            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["title"] : "none",
+            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["time"] : 1,
+            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["color"] : const Color(0xffc2c2c2),
+            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["type"] : "none"
+        ) :
         GDPData(
             data[0]["category_$idx"] != null ? data[0]["category_$idx"]["title"] : "",
             data[0]["category_$idx"] != null ? data[0]["category_$idx"]["time"] : 0,
@@ -123,6 +165,12 @@ class CategoryPageState extends State<CategoryPage>{
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     bool limit = false;
+    int categoriesLength = 0;
+    for(var i = 0; i < data[0].length; i++){
+      if(data[0]["category_$i"] != null){
+        categoriesLength++;
+      }
+    }
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>$screenWidth $screenHeight");
 
     /* Get type of time */
@@ -182,6 +230,7 @@ class CategoryPageState extends State<CategoryPage>{
     /* Get the length of category block */
     int categoryLength(blockPart){
       int categoriesNum = 0;
+      print("+++++++++++++++++$blockPart");
       switch(blockPart){
         case 1:
           if(data[0].length < 4){
@@ -204,22 +253,32 @@ class CategoryPageState extends State<CategoryPage>{
             categoriesNum = 8;
           }
           break;
-        case 4:
-          if(data[0].length < 12){
+        case 9:
+          if(data[0].length <= 12){
             categoriesNum = data[0].length;
           } else {
             categoriesNum = 12;
           }
+          break;
+        case 13:
+          if(data[0].length <= 16){
+            categoriesNum = data[0].length;
+          } else {
+            categoriesNum = 16;
+          }
+          break;
+        case 17:
+          categoriesNum = 20;
           break;
       }
       return categoriesNum;
     }
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        SizedBox(height: screenHeight * 0.007,),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             for(var index = 1; index <= categoryLength(1); index++)
               data[0]["category_$index"] != null ? Category(data: data[0]["category_$index"]) :
@@ -227,19 +286,20 @@ class CategoryPageState extends State<CategoryPage>{
           ],
         ),
         SizedBox(height: screenHeight > 700 ? screenHeight * 0.008 : screenHeight * 0.008),
-        screenHeight > 650 ? SizedBox(height: screenHeight * 0.05,) : const SizedBox(),
+        screenHeight > 650 ? SizedBox(height: screenHeight * 0.05) : const SizedBox(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 for(var index = 5; index <= categoryLength(2); index++)
                   data[0]["category_$index"] != null ? Category(data: data[0]["category_$index"]) :
                   !limit ? addCategoryButton() : const SizedBox()
               ],
             ),
-            SizedBox(
+            Container(
+              margin: EdgeInsets.only(top: screenHeight * 0.0187),
               width: screenWidth * 0.51,
               height: screenWidth * 0.51,
               child: Stack(
@@ -349,8 +409,8 @@ class CategoryPageState extends State<CategoryPage>{
                 ],
               ),
             ),
+            categoriesLength == 4 || categoriesLength == 5 ? SizedBox(width: screenWidth * 0.24, height: screenWidth * 0.285) :
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 for(var index = 7; index <= categoryLength(3); index++)
                   data[0]["category_$index"] != null ? Category(data: data[0]["category_$index"]) :
@@ -361,14 +421,21 @@ class CategoryPageState extends State<CategoryPage>{
         ),
         SizedBox(height: screenHeight > 650 ? 15 : 5),
         screenHeight > 650 ? SizedBox(height: screenHeight * 0.05,) : const SizedBox(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            for(var index = 1; index <= categoryLength(1); index++)
-              data[0]["category_$index"] != null ? Category(data: data[0]["category_$index"]) :
-              !limit ? addCategoryButton() : const SizedBox()
+            for(var idx = 9; idx <= categoriesLength; idx++)
+              if(idx == 9 || idx == 13 || idx == 17)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    for(var index = idx; index <= categoryLength(idx); index++)
+                      data[0]["category_$index"] != null ? Category(data: data[0]["category_$index"]) :
+                      !limit ? addCategoryButton() : const SizedBox()
+                  ],
+                )
           ],
-        ),
+        )
       ],
     );
   }
