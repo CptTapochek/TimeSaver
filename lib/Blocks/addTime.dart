@@ -24,7 +24,7 @@ class AddTimeState extends State<BottomSheetAddTime> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    getTime(time){
+    getTime(time, range){
       int hours = 0, minutes = 0;
       for(var i = 0; i < time; i++){
         if(i % 60 == 0){
@@ -35,7 +35,11 @@ class AddTimeState extends State<BottomSheetAddTime> {
           }
         }
       }
-      return "${hours < 10 ? '0' : ''}${hours.toString()}:${minutes < 10 ? '0' : ''}${minutes.toString()}";
+      if(range == true) {
+        return "${hours < 10 ? '0' : ''}${hours.toString()}:${minutes < 10 ? '0' : ''}${minutes.toString()}";
+      } else {
+        return "${hours < 10 ? '0' : ''}${hours.toString()} : ${minutes < 10 ? '0' : ''}${minutes.toString()}";
+      }
     }
 
     getScreenLoadingWidth(){
@@ -80,7 +84,7 @@ class AddTimeState extends State<BottomSheetAddTime> {
                               text: "Range \n",
                               children: [
                                 TextSpan(
-                                    text: data["limit"] ? "${getTime(data["min"])} - ${getTime(data["max"])}" : "None",
+                                    text: data["limit"] ? "${getTime(data["min"], true)} - ${getTime(data["max"], true)}" : "None",
                                     style: const TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold
@@ -133,6 +137,25 @@ class AddTimeState extends State<BottomSheetAddTime> {
                       )
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: screenHeight * 0.1,
+                  child: Center(
+                    child: Text(
+                      getTime(data["time"], false),
+                      style: const TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w300,
+                        fontFamily: "Inter",
+                        color: Color(0xffC81343)
+                      ),
+                    ),
+                  ),
+                ),
+                const Divider(
+                  height: 0,
+                  thickness: 1,
+                  color: Color(0xffe0e0e0),
                 )
               ],
             ),
