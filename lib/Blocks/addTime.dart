@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 
 class BottomSheetAddTime extends StatefulWidget{
@@ -12,10 +13,13 @@ class BottomSheetAddTime extends StatefulWidget{
 
 class AddTimeState extends State<BottomSheetAddTime> {
   var data;
+  int hours = 0, minutes = 0;
 
   @override
   void initState(){
     data = widget.data;
+    hours; minutes;
+
     super.initState();
   }
 
@@ -138,8 +142,20 @@ class AddTimeState extends State<BottomSheetAddTime> {
                     ],
                   ),
                 ),
-                SizedBox(
+                Container(
                   height: screenHeight * 0.1,
+                  width: screenWidth,
+                  // decoration: BoxDecoration(
+                  //   color: Colors.white,
+                  //   boxShadow: [
+                  //     BoxShadow(
+                  //       color: Colors.grey.withOpacity(0.3),
+                  //       spreadRadius: 1,
+                  //       blurRadius: 8,
+                  //       offset: Offset(0, 3), // changes position of shadow
+                  //     ),
+                  //   ],
+                  // ),
                   child: Center(
                     child: Text(
                       getTime(data["time"], false),
@@ -152,10 +168,140 @@ class AddTimeState extends State<BottomSheetAddTime> {
                     ),
                   ),
                 ),
-                const Divider(
-                  height: 0,
-                  thickness: 1,
-                  color: Color(0xffe0e0e0),
+                const Divider(height: 0, thickness: 1, color: Color(0xffe0e0e0)),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          margin: const EdgeInsets.only(right: 10),
+                          width: screenWidth * 0.416,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                  top: screenHeight * 0.089, right: 0,
+                                  child: Center(
+                                    child: Container(
+                                      width: screenWidth * 0.125, height: screenHeight * 0.048,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(width: 2, color: Color(0xffC81343)),
+                                          borderRadius: BorderRadius.circular(5)
+                                      ),
+                                    ),
+                                  )
+                              ),
+                              Positioned(
+                                child: CarouselSlider(
+                                  options: CarouselOptions(
+                                    height: screenHeight * 0.227,
+                                    viewportFraction: 0.22,
+                                    scrollDirection: Axis.vertical,
+                                    onPageChanged: (idx, reason){
+                                      setState((){
+                                        hours = idx;
+                                      });
+                                    }
+                                  ),
+                                  items: [for(var idx = 0; idx < 25; idx++)idx].map((i) {
+                                    return Builder(
+                                      builder: (BuildContext context) {
+                                        return Container(
+                                          color: Colors.transparent,
+                                          margin: const EdgeInsets.only(right: 8),
+                                          child: Text(
+                                            i.toString(),
+                                            textAlign: TextAlign.right,
+                                            style: TextStyle(fontSize: screenWidth * 0.066, fontFamily: "Inter"),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ],
+                          )
+                      ),
+                      Text(":", style: TextStyle(fontSize: screenWidth * 0.066, fontFamily: "Inter"),),
+                      Container(
+                        margin: const EdgeInsets.only(left: 10),
+                        width: screenWidth * 0.416,
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              top: screenHeight * 0.089, left: 0,
+                              child: Center(
+                                child: Container(
+                                  width: screenWidth * 0.125, height: screenHeight * 0.048,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(width: 2, color: Color(0xffC81343)),
+                                      borderRadius: BorderRadius.circular(5)
+                                  ),
+                                ),
+                              )
+                            ),
+                            Positioned(
+                              child: CarouselSlider(
+                                options: CarouselOptions(
+                                  height: screenHeight * 0.227,
+                                  viewportFraction: 0.22,
+                                  scrollDirection: Axis.vertical,
+                                    onPageChanged: (idx, reason){
+                                      setState((){
+                                        minutes = idx;
+                                      });
+                                    }
+                                ),
+                                items: [for(var idx = 0; idx < 60; idx++)idx].map((i) {
+                                  return Builder(
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        margin: const EdgeInsets.only(left: 8),
+                                        color: Colors.transparent,
+                                        child: Text(
+                                          i.toString(),
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(fontSize: screenWidth * 0.066, fontFamily: "Inter"),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ],
+                        )
+                      ),
+                    ],
+                  )
+                ),
+                const Divider(height: 0, thickness: 1, color: Color(0xffe0e0e0)),
+                const SizedBox(height: 5),
+                TextButton(
+                  style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                  child: SizedBox(
+                    height: screenHeight * 0.057, width: screenWidth * 0.5,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(3),
+                              color: data["color"]
+                            ),
+                          )
+                        ),
+                        Positioned(
+                          child: Center(
+                            child: Icon(Icons.add_rounded, size: screenWidth * 0.083, color: Colors.white),
+                          )
+                        )
+                      ],
+                    ),
+                  )
                 )
               ],
             ),
