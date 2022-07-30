@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:time_saver/Blocks/CategoryBlock.dart';
 import 'package:time_saver/Data/data.dart';
+import 'package:time_saver/pages/NewCategory.dart';
 
 
 late List<GDPData> _chartData;
@@ -15,12 +16,14 @@ class GDPData{
   final String type;
 }
 
+
 class CategoryPage extends StatefulWidget {
   const CategoryPage({Key? key}) : super(key: key);
 
   @override
   State<CategoryPage> createState() => CategoryPageState();
 }
+
 
 class CategoryPageState extends State<CategoryPage>{
   final int usefulTime = 0;
@@ -98,7 +101,13 @@ class CategoryPageState extends State<CategoryPage>{
         limit = true;
       });
       return TextButton(
-          onPressed: () {},
+          style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NewCategory()),
+            );
+          },
           child: Column(
             children: [
               SizedBox(
@@ -221,6 +230,7 @@ class CategoryPageState extends State<CategoryPage>{
                               'Time:',
                               style: TextStyle(
                                 color: Colors.black,
+                                fontFamily: "Inter",
                                 fontSize: screenWidth * 0.043,
                               ),
                             ),
@@ -232,6 +242,7 @@ class CategoryPageState extends State<CategoryPage>{
                                     'Useful: ',
                                     style: TextStyle(
                                       color: Colors.green,
+                                      fontFamily: "Inter",
                                       fontSize: screenWidth * 0.043
                                     )
                                 ),
@@ -240,6 +251,7 @@ class CategoryPageState extends State<CategoryPage>{
                                   child: Text(
                                       timeType("useful"),
                                       style: TextStyle(
+                                          fontFamily: "Inter",
                                           color: Colors.green,
                                           fontSize: screenWidth * 0.05,
                                           fontWeight: FontWeight.w500
@@ -255,6 +267,7 @@ class CategoryPageState extends State<CategoryPage>{
                                 Text(
                                     'Wasted: ',
                                     style: TextStyle(
+                                        fontFamily: "Inter",
                                         color: Colors.redAccent,
                                         fontSize: screenWidth * 0.043
                                     )
@@ -264,6 +277,7 @@ class CategoryPageState extends State<CategoryPage>{
                                   child: Text(
                                       timeType("wasted"),
                                       style: TextStyle(
+                                          fontFamily: "Inter",
                                           color: Colors.redAccent,
                                           fontSize: screenWidth * 0.05,
                                           fontWeight: FontWeight.w500
@@ -279,6 +293,7 @@ class CategoryPageState extends State<CategoryPage>{
                                 Text(
                                     'Rest: ',
                                     style: TextStyle(
+                                        fontFamily: "Inter",
                                         color: Colors.orangeAccent,
                                         fontSize: screenWidth * 0.043
                                     )
@@ -288,6 +303,7 @@ class CategoryPageState extends State<CategoryPage>{
                                   child: Text(
                                       timeType("rest"),
                                       style: TextStyle(
+                                          fontFamily: "Inter",
                                           color: Colors.orangeAccent,
                                           fontSize: screenWidth * 0.05,
                                           fontWeight: FontWeight.w500

@@ -38,6 +38,7 @@ class CategoryState extends State<Category> {
 
     return Container(
         child: TextButton(
+          style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
           onPressed: () {
             showModalBottomSheet<void>(
               context: context,
@@ -56,6 +57,7 @@ class CategoryState extends State<Category> {
                       text: TextSpan(
                         text: data["title"],
                         style: TextStyle(
+                            fontFamily: "Inter",
                             color: Colors.grey[900],
                             fontWeight: FontWeight.w400,
                             fontSize: screenWidth * 0.036
@@ -87,6 +89,7 @@ class CategoryState extends State<Category> {
               Text(
                 '${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes',
                 style: TextStyle(
+                  fontFamily: "Inter",
                   fontWeight: FontWeight.w600,
                   color: data["color"],
                   fontSize: screenWidth * 0.036

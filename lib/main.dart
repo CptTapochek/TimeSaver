@@ -72,6 +72,8 @@ class MainPageState extends State<MainPage> {
         selectedItemColor: mainColor,
         unselectedItemColor: const Color(0xffa8a8a8),
         selectedFontSize: 14,
+        unselectedLabelStyle: const TextStyle(fontFamily: "Inter"),
+        selectedLabelStyle: const TextStyle(fontFamily: "Inter"),
         onTap: getBottomTap,
         currentIndex: selectedIndex,
         items: const <BottomNavigationBarItem>[

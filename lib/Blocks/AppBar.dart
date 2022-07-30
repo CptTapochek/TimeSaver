@@ -31,7 +31,15 @@ class AppBarContentState extends State<AppBarContent> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const <Widget>[
               IconButton(onPressed: editCategories, icon: Icon(Icons.menu), color: Colors.white),
-              Text('1Day', style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),),
+              Text(
+                '1Day',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "Inter"
+                ),
+              ),
               IconButton(onPressed: editCategories, icon: Icon(Icons.edit), color: Colors.white),
             ],
           ),
@@ -41,7 +49,11 @@ class AppBarContentState extends State<AppBarContent> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const IconButton(onPressed: editCategories, icon: Icon(Icons.arrow_back_ios), color: Colors.white),
+              TextButton(
+                onPressed: editCategories,
+                style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
+                child: const Icon(Icons.arrow_back_ios, color: Colors.white),
+              ),
               ElevatedButton(
                   onPressed: editCategories,
                   style: ElevatedButton.styleFrom(
@@ -58,21 +70,40 @@ class AppBarContentState extends State<AppBarContent> {
                           borderRadius: BorderRadius.circular(2.5),
                           color: Colors.white,
                         ),
-                        child: Text('30', style: TextStyle(
-                            fontSize: 16, color: mainColor
-                        )),
+                        child: Text(
+                            '30',
+                            style: TextStyle(
+                            fontSize: 16,
+                            color: mainColor,
+                            fontFamily: "Inter",
+                          )
+                        ),
                       ),
                       const SizedBox(width: 5),
-                      const Text('APRIL', style: TextStyle(
-                          fontSize: 17
-                      )),
+                      const Text(
+                          'APRIL',
+                          style: TextStyle(
+                          fontSize: 17,
+                          fontFamily: "Inter",
+                        )
+                      ),
                       const SizedBox(width: 5),
-                      const Text('2022', style: TextStyle(fontSize: 17)),
+                      const Text(
+                          '2022',
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontFamily: "Inter",
+                          )
+                      ),
                       const Icon(Icons.arrow_drop_down_sharp, size: 25)
                     ],
                   )
               ),
-              const IconButton(onPressed: editCategories, icon: Icon(Icons.arrow_forward_ios), color: Colors.white),
+              TextButton(
+                onPressed: editCategories,
+                style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
+                child: const Icon(Icons.arrow_forward_ios, color: Colors.white),
+              ),
             ],
           ),
         ),

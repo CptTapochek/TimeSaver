@@ -84,14 +84,15 @@ class AddTimeState extends State<BottomSheetAddTime> {
                         margin: const EdgeInsets.only(left: 15),
                         child: RichText(
                           text: TextSpan(
-                              style: const TextStyle(height: 1.4),
+                              style: const TextStyle(height: 1.4, fontFamily: "Inter"),
                               text: "Range \n",
                               children: [
                                 TextSpan(
                                     text: data["limit"] ? "${getTime(data["min"], true)} - ${getTime(data["max"], true)}" : "None",
                                     style: const TextStyle(
                                         fontSize: 17,
-                                        fontWeight: FontWeight.bold
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: "Inter"
                                     )
                                 )
                               ]
@@ -106,14 +107,15 @@ class AddTimeState extends State<BottomSheetAddTime> {
                         child: RichText(
                           overflow: TextOverflow.ellipsis,
                           text: TextSpan(
-                              style: const TextStyle(height: 1.4),
+                              style: const TextStyle(height: 1.4, fontFamily: "Inter"),
                               text: "To category \n",
                               children: [
                                 TextSpan(
                                     text: data["title"],
                                     style: const TextStyle(
                                         fontSize: 17,
-                                        fontWeight: FontWeight.bold
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: "Inter"
                                     )
                                 )
                               ]
