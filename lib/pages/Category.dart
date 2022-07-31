@@ -179,7 +179,7 @@ class CategoryPageState extends State<CategoryPage>{
 
     return Column(
       children: [
-        SizedBox(height: screenHeight * 0.007,),
+        SizedBox(height: screenHeight > 700 ? screenHeight * 0.05 : screenHeight * 0.007),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -188,8 +188,7 @@ class CategoryPageState extends State<CategoryPage>{
               !limit ? addCategoryButton() : const SizedBox()
           ],
         ),
-        SizedBox(height: screenHeight > 700 ? screenHeight * 0.008 : screenHeight * 0.008),
-        screenHeight > 650 ? SizedBox(height: screenHeight * 0.05) : const SizedBox(),
+        SizedBox(height: screenHeight > 700 ? screenHeight * 0.04 : screenHeight * 0.008),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,21 +201,22 @@ class CategoryPageState extends State<CategoryPage>{
               ],
             ),
             Container(
-              margin: EdgeInsets.only(top: screenHeight * 0.0187),
-              width: screenWidth * 0.51,
-              height: screenWidth * 0.51,
+              margin: EdgeInsets.only(top: screenHeight > 700 ? screenHeight * 0.0387 : screenHeight * 0.0187),
+              width: screenWidth * 0.5,
+              height: screenWidth * 0.5,
               child: Stack(
                 children: [
                   SfCircularChart(
                     series: <CircularSeries>[
                       DoughnutSeries<GDPData, String>(
                           dataSource: _chartData,
+                          animationDuration: 700,
                           xValueMapper: (GDPData data, _) => data.categoryTitle,
                           yValueMapper: (GDPData data, _) => data.gdp,
                           pointColorMapper: (GDPData data, _) => data.colors,
                           dataLabelSettings: const DataLabelSettings(isVisible: false),
-                          innerRadius: '${screenWidth * 0.22}',
-                          radius: '${screenWidth * 0.264}'
+                          innerRadius: '${screenWidth * 0.207}',
+                          radius: '${screenWidth * 0.24}'
                       ),
                     ],
                   ),
@@ -329,8 +329,7 @@ class CategoryPageState extends State<CategoryPage>{
             ),
           ],
         ),
-        SizedBox(height: screenHeight > 650 ? 15 : 5),
-        screenHeight > 650 ? SizedBox(height: screenHeight * 0.05,) : const SizedBox(),
+        SizedBox(height: screenHeight > 700 ? screenHeight * 0.04 : screenHeight * 0.008),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

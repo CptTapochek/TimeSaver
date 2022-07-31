@@ -5,6 +5,7 @@ getCategoriesData(){
   List data = [
     {
       "category_1":{
+        "index": 1,
         "title": "Rutina",
         "time": 2600,
         "color": Color(0xffc82aec),
@@ -15,6 +16,7 @@ getCategoriesData(){
         "max": 18000
       },
       "category_2":{
+        "index": 2,
         "title": "Serial/Films",
         "time": 1500,
         "color": Color(0xff6d35d0),
@@ -25,6 +27,7 @@ getCategoriesData(){
         "max": 7200
       },
       "category_3":{
+        "index": 3,
         "title": "Work",
         "time": 5212,
         "color": Color(0xff5c4141),
@@ -33,6 +36,7 @@ getCategoriesData(){
         "limit": false,
       },
       "category_4":{
+        "index": 4,
         "title": "Projects",
         "time": 0,
         "color": Color(0xffe79818),
@@ -41,6 +45,7 @@ getCategoriesData(){
         "limit": false,
       },
       "category_5":{
+        "index": 5,
         "title": "Extra study",
         "time": 498,
         "color": Color(0xff4997dc),
@@ -49,6 +54,7 @@ getCategoriesData(){
         "limit": false,
       },
       "category_6":{
+        "index": 6,
         "title": "Sleep",
         "time": 9000,
         "color": Color(0xffb90e36),
@@ -59,6 +65,7 @@ getCategoriesData(){
         "max": 30700
       },
       "category_7":{
+        "index": 7,
         "title": "Games",
         "time": 4433,
         "color": Color(0xff37af47),
@@ -69,6 +76,7 @@ getCategoriesData(){
         "max": 7200
       },
       "category_8":{
+        "index": 8,
         "title": "Friends/Family",
         "time": 0,
         "color": Color(0xffa3af37),
@@ -79,6 +87,7 @@ getCategoriesData(){
         "max": 7200
       },
       "category_9":{
+        "index": 9,
         "title": "YouTube",
         "time": 4433,
         "color": Color(0xffe15353),
@@ -89,6 +98,7 @@ getCategoriesData(){
         "max": 7200
       },
       "category_10":{
+        "index": 10,
         "title": "Sport",
         "time": 4433,
         "color": Color(0xff31b9ae),

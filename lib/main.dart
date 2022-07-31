@@ -68,29 +68,32 @@ class MainPageState extends State<MainPage> {
         ),
       ),
       body: _widgetOptions.elementAt(selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: mainColor,
-        unselectedItemColor: const Color(0xffa8a8a8),
-        selectedFontSize: 14,
-        unselectedLabelStyle: const TextStyle(fontFamily: "Inter"),
-        selectedLabelStyle: const TextStyle(fontFamily: "Inter"),
-        onTap: getBottomTap,
-        currentIndex: selectedIndex,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history_rounded),
-            label: 'History',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.pie_chart_rounded),
-            label: 'Category',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: 'Overview',
-          ),
-        ],
-      ),
+      bottomNavigationBar: SafeArea(
+        bottom: true,
+        child: BottomNavigationBar(
+          selectedItemColor: mainColor,
+          unselectedItemColor: const Color(0xffa8a8a8),
+          selectedFontSize: 14,
+          unselectedLabelStyle: const TextStyle(fontFamily: "Inter"),
+          selectedLabelStyle: const TextStyle(fontFamily: "Inter"),
+          onTap: getBottomTap,
+          currentIndex: selectedIndex,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.history_rounded),
+              label: 'History',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.pie_chart_rounded),
+              label: 'Category',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart),
+              label: 'Overview',
+            ),
+          ],
+        ),
+      )
     );
   }
 }

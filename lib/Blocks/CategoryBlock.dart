@@ -22,6 +22,8 @@ class CategoryState extends State<Category> {
   @override
   Widget build(BuildContext context) {
     data = widget.data;
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
 
     int hours = 0, minutes = 0;
     for(var i = 0; i < data["time"]; i++){
@@ -34,9 +36,17 @@ class CategoryState extends State<Category> {
       }
     }
 
-    var screenWidth = MediaQuery.of(context).size.width;
+    getBlockHeight(){
+      double height = 0;
+      if(screenHeight > 700 && (data["index"] == 5 || data["index"] == 7)){
+        height = screenHeight * 0.04;
+      }
+
+      return height;
+    }
 
     return Container(
+        margin: EdgeInsets.only(left: 1, bottom: getBlockHeight()),
         child: TextButton(
           style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
           onPressed: () {
