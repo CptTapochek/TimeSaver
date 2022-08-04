@@ -46,7 +46,7 @@ class CategoryState extends State<Category> {
     }
 
     return Container(
-        margin: EdgeInsets.only(left: 1, bottom: getBlockHeight()),
+        margin: EdgeInsets.only(left: 2, bottom: getBlockHeight()),
         child: TextButton(
           style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
           onPressed: () {
@@ -78,7 +78,7 @@ class CategoryState extends State<Category> {
               ),
               const SizedBox(height: 5),
               Container(
-                width: screenWidth * 0.13, height: screenWidth * 0.13,
+                width: screenWidth * 0.14, height: screenWidth * 0.14,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   color: data["color"],
@@ -88,7 +88,7 @@ class CategoryState extends State<Category> {
                     Positioned(
                       child: Center(
                         child: SvgPicture.asset("assets/category-icons/${data["icon"]}.svg",
-                          height: screenWidth * 0.07, width: screenWidth * 0.07, color: Colors.white
+                          height: screenWidth * 0.075, width: screenWidth * 0.075, color: Colors.white
                         ),
                       )
                     )

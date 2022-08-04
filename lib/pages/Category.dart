@@ -179,7 +179,7 @@ class CategoryPageState extends State<CategoryPage>{
 
     return Column(
       children: [
-        SizedBox(height: screenHeight > 700 ? screenHeight * 0.05 : screenHeight * 0.007),
+        SizedBox(height: screenHeight > 700 ? screenHeight * 0.05 : screenHeight * 0.005),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -188,7 +188,7 @@ class CategoryPageState extends State<CategoryPage>{
               !limit ? addCategoryButton() : const SizedBox()
           ],
         ),
-        SizedBox(height: screenHeight > 700 ? screenHeight * 0.04 : screenHeight * 0.008),
+        SizedBox(height: screenHeight > 700 ? screenHeight * 0.04 : screenHeight * 0.005),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -329,7 +329,7 @@ class CategoryPageState extends State<CategoryPage>{
             ),
           ],
         ),
-        SizedBox(height: screenHeight > 700 ? screenHeight * 0.04 : screenHeight * 0.008),
+        SizedBox(height: screenHeight > 700 ? screenHeight * 0.04 : screenHeight * 0.005),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

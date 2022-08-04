@@ -81,18 +81,31 @@ getRandomIcons(){
 
 class NewCategoryState extends State<NewCategory> {
   Color mainColor = getRandomColor();
+  String mainIcon = getRandomIcons();
+  final FocusNode _focusNode = FocusNode();
+  Color labelTextColor = const Color(0xffffffff);
+  String title = "";
 
   @override
   void initState() {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
 
+    _focusNode.addListener(() {
+      setState(() {
+        labelTextColor = _focusNode.hasFocus ? Colors.blue : Colors.red;
+      });
+    });
+
+    print(title);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: Container(
@@ -109,9 +122,92 @@ class NewCategoryState extends State<NewCategory> {
           children: [
             /* Header */
             Container(
-              height: 55,
+              height: screenHeight * 0.5,
               child: Stack(
                 children: [
+                  Positioned(
+                    child: Container(
+                      height: screenHeight * 0.5, width: screenWidth,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 8,
+                            offset: const Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                        color: Colors.white,
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 55),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: screenWidth * 0.8,
+                              child: Text(
+                                "Settings",
+                                style: TextStyle(
+                                  color: mainColor,
+                                  fontSize: 16,
+                                  fontFamily: "Inter",
+                                  fontWeight: FontWeight.w500
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              width: screenWidth * 0.8,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextField(
+                                    focusNode: _focusNode,
+                                    style: const TextStyle(
+                                      fontFamily: "Inter",
+                                      color: Colors.black,
+                                      fontSize: 18
+                                    ),
+                                    textCapitalization: TextCapitalization.sentences,
+                                    maxLength: 40,
+                                    decoration: InputDecoration(
+                                      alignLabelWithHint: _focusNode.hasFocus ? true : true,
+                                      labelText: "Title",
+                                      labelStyle: TextStyle(
+                                        color: _focusNode.hasFocus ? mainColor : const Color(0xffbbbaba),
+                                        fontSize: _focusNode.hasFocus ? 18 : 18,
+                                      ),
+                                      counterText: "",
+                                      hintMaxLines: 1,
+                                      fillColor: Colors.transparent,
+                                      enabledBorder: UnderlineInputBorder(borderSide: BorderSide(width: 2, color: mainColor)),
+                                      border: UnderlineInputBorder(borderSide: BorderSide(width: 2, color: mainColor)),
+                                      focusedBorder: UnderlineInputBorder(borderSide: BorderSide(width: 2, color: mainColor)),
+                                      contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                                    ),
+                                    autofocus: false,
+                                    onChanged: (value){
+                                      setState((){
+                                        title = value;
+                                      });
+                                    }
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Column(
+                              children: [
+                                Text("Limits")
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ),
+                  ),
                   Positioned(
                     child: Container(
                       height: 30,
@@ -129,7 +225,7 @@ class NewCategoryState extends State<NewCategory> {
                     ),
                   ),
                   Positioned(
-                      bottom: 0, right: 20,
+                      top: 0, right: 20,
                       child: TextButton(
                           style: ButtonStyle(
                               overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
@@ -159,7 +255,7 @@ class NewCategoryState extends State<NewCategory> {
                                 ),
                                 Positioned(
                                     child: Center(
-                                      child: SvgPicture.asset("assets/category-icons/${getRandomIcons()}.svg", color: mainColor, width: 35, height: 35),
+                                      child: SvgPicture.asset("assets/category-icons/$mainIcon.svg", color: mainColor, width: 35, height: 35),
                                     )
                                 ),
                               ],
@@ -171,25 +267,6 @@ class NewCategoryState extends State<NewCategory> {
               ),
             ),
             const SizedBox(height: 20),
-            Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 1,
-                    blurRadius: 8,
-                    offset: const Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-                color: Colors.white,
-              ),
-              height: 200,
-              child: Row(
-                children: [
-
-                ],
-              ),
-            )
           ],
         ),
       )
