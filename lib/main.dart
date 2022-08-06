@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:time_saver/Blocks/AppBar.dart';
-import 'pages/Category.dart';
+import 'screens/Category/Category.dart';
 
 
 void main() {

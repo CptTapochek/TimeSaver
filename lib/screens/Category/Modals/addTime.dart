@@ -186,7 +186,7 @@ class AddTimeState extends State<BottomSheetAddTime> {
                                     child: Container(
                                       width: screenWidth * 0.125, height: screenHeight * 0.048,
                                       decoration: BoxDecoration(
-                                          border: Border.all(width: 2, color: Color(0xffC81343)),
+                                          border: Border.all(width: 2, color: const Color(0xffC81343)),
                                           borderRadius: BorderRadius.circular(5)
                                       ),
                                     ),
@@ -236,7 +236,7 @@ class AddTimeState extends State<BottomSheetAddTime> {
                                 child: Container(
                                   width: screenWidth * 0.125, height: screenHeight * 0.048,
                                   decoration: BoxDecoration(
-                                      border: Border.all(width: 2, color: Color(0xffC81343)),
+                                      border: Border.all(width: 2, color: const Color(0xffC81343)),
                                       borderRadius: BorderRadius.circular(5)
                                   ),
                                 ),
