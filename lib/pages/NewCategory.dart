@@ -200,7 +200,7 @@ class NewCategoryState extends State<NewCategory> {
                             const SizedBox(height: 20),
                             Column(
                               children: [
-                                Text("Limits")//Test Commit
+                                Text("Limits")
                               ],
                             )
                           ],
