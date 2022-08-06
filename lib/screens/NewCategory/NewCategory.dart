@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:time_saver/Blocks/NewCategoryAppBar.dart';
+import 'package:time_saver/screens/NewCategory/Blocks/NewCategoryAppBar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:time_saver/screens/NewCategory/Modals/timeLimit.dart';
 
 
 class NewCategory extends StatefulWidget {
@@ -139,7 +139,7 @@ class NewCategoryState extends State<NewCategory> {
                             "Settings",
                             style: TextStyle(
                               color: mainColor,
-                              fontSize: 16,
+                              fontSize: 17,
                               fontFamily: "Inter",
                               fontWeight: FontWeight.w500
                             ),
@@ -187,119 +187,77 @@ class NewCategoryState extends State<NewCategory> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 30),
 
                         /* LIMITS BLOCK */
-                        Column(
-                          children: [
-                            Text("Limits"),
+                        SizedBox(
+                          width: screenWidth * 0.8,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Limits",
+                                style: TextStyle(
+                                    color: mainColor,
+                                    fontSize: 16,
+                                    fontFamily: "Inter",
+                                    fontWeight: FontWeight.w400
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: (){
+                                  showDialog<void>(
+                                      context: context,
+                                      builder: (BuildContext context){
+                                        return TimeLimitModal(context);
+                                      }
+                                  );
+                                },
+                                style: ButtonStyle(
+                                  overlayColor: MaterialStateColor.resolveWith((states) => mainColor.withOpacity(0.25)),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: const [
+                                    Icon(Icons.add_rounded, size: 22, color: Color(0xff6e6e6e),),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      "Minimal Time",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontFamily: "Inter",
+                                          fontWeight: FontWeight.w400
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: (){},
+                                style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => mainColor.withOpacity(0.25))),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: const [
+                                    Icon(Icons.add_rounded, size: 22, color: Color(0xff6e6e6e),),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      "Maximal Time",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontFamily: "Inter",
+                                          fontWeight: FontWeight.w400
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
 
-                            const SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                    margin: const EdgeInsets.only(right: 10),
-                                    width: screenWidth * 0.416,
-                                    child: Stack(
-                                      children: [
-                                        Positioned(
-                                            top: screenHeight * 0.152, right: 0,
-                                            child: Center(
-                                              child: Container(
-                                                width: screenWidth * 0.11, height: screenHeight * 0.045,
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(width: 1.5, color: const Color(0xffC81343)),
-                                                    borderRadius: BorderRadius.circular(5)
-                                                ),
-                                              ),
-                                            )
-                                        ),
-                                        Positioned(
-                                          child: CarouselSlider(
-                                            options: CarouselOptions(
-                                                height: screenHeight * 0.35,
-                                                viewportFraction: 0.135,
-                                                scrollDirection: Axis.vertical,
-                                                onPageChanged: (idx, reason){
-                                                  setState((){
-                                                    hours = idx;
-                                                  });
-                                                }
-                                            ),
-                                            items: [for(var idx = 0; idx < 25; idx++)idx].map((i) {
-                                              return Builder(
-                                                builder: (BuildContext context) {
-                                                  return Container(
-                                                    color: Colors.transparent,
-                                                    margin: const EdgeInsets.only(right: 8),
-                                                    child: Text(
-                                                      i.toString(),
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(fontSize: screenWidth * 0.05, fontFamily: "Inter"),
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                ),
-                                Text(":", style: TextStyle(fontSize: screenWidth * 0.05, fontFamily: "Inter"),),
-                                Container(
-                                    margin: const EdgeInsets.only(left: 10),
-                                    width: screenWidth * 0.416,
-                                    child: Stack(
-                                      children: [
-                                        Positioned(
-                                            top: screenHeight * 0.152, left: 0,
-                                            child: Center(
-                                              child: Container(
-                                                width: screenWidth * 0.11, height: screenHeight * 0.045,
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(width: 1.5, color: const Color(0xffC81343)),
-                                                    borderRadius: BorderRadius.circular(5)
-                                                ),
-                                              ),
-                                            )
-                                        ),
-                                        Positioned(
-                                          child: CarouselSlider(
-                                            options: CarouselOptions(
-                                                height: screenHeight * 0.35,
-                                                viewportFraction: 0.135,
-                                                scrollDirection: Axis.vertical,
-                                                onPageChanged: (idx, reason){
-                                                  setState((){
-                                                    minutes = idx;
-                                                  });
-                                                }
-                                            ),
-                                            items: [for(var idx = 0; idx < 61; idx++)if(idx % 5 == 0)idx].map((i) {
-                                              return Builder(
-                                                builder: (BuildContext context) {
-                                                  return Container(
-                                                    margin: const EdgeInsets.only(left: 8),
-                                                    color: Colors.transparent,
-                                                    child: Text(
-                                                      i.toString(),
-                                                      textAlign: TextAlign.left,
-                                                      style: TextStyle(fontSize: screenWidth * 0.05, fontFamily: "Inter"),
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                ),
-                              ],
-                            )
-                          ],
+                            ],
+                          ),
                         )
                       ],
                     ),

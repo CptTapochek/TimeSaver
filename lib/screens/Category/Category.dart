@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:time_saver/Blocks/CategoryBlock.dart';
+import 'package:time_saver/screens/Category/Blocks/CategoryBlock.dart';
 import 'package:time_saver/Data/data.dart';
 import 'package:time_saver/screens/NewCategory/NewCategory.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:time_saver/Blocks/addTime.dart';
+import 'package:time_saver/screens/Category/Modals/addTime.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 
