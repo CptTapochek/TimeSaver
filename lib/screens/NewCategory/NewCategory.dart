@@ -85,12 +85,15 @@ class NewCategoryState extends State<NewCategory> {
   String mainIcon = getRandomIcons();
   final FocusNode _focusNode = FocusNode();
   Color labelTextColor = const Color(0xffffffff);
+  var dropDownValue = "Useful";
   String title = "";
-  int hours = 0, minutes = 0;
+  String timeType = "";
+  Color dropDownColor = const Color(0xff000000);
+  int maxTime = 0, minTime = 0;
 
   @override
   void initState() {
-    hours; minutes;
+    timeType = "useful";
 
     super.initState();
   }
@@ -106,6 +109,45 @@ class NewCategoryState extends State<NewCategory> {
         labelTextColor = _focusNode.hasFocus ? Colors.blue : Colors.red;
       });
     });
+
+    inputLimitTime(type, value){
+      setState((){
+        switch(type) {
+          case "max":
+            maxTime = value;
+            break;
+          case "min":
+            minTime = value;
+            break;
+        }
+        });
+    }
+
+    getEnabledIconColor(){
+      Color color;
+      if(timeType == "useful"){
+        color = Colors.green;
+      } else if(timeType == "wasted"){
+        color = Colors.redAccent;
+      } else {
+        color = Colors.orangeAccent;
+      }
+      return color;
+    }
+
+    getTime(time){
+      int hours = 0, minutes = 0;
+      for(var i = 0; i < time; i++){
+        if(i % 60 == 0){
+          minutes++;
+          if(minutes % 60 == 0){
+            hours++;
+            minutes = 0;
+          }
+        }
+      }
+      return "${hours < 10 ? '0' : ''}${hours.toString()}:${minutes < 10 ? '0' : ''}${minutes.toString()}";
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -172,7 +214,7 @@ class NewCategoryState extends State<NewCategory> {
                                   counterText: "",
                                   hintMaxLines: 1,
                                   fillColor: Colors.transparent,
-                                  enabledBorder: UnderlineInputBorder(borderSide: BorderSide(width: 2, color: mainColor)),
+                                  //enabledBorder: UnderlineInputBorder(borderSide: BorderSide(width: 2, color: mainColor)),
                                   border: UnderlineInputBorder(borderSide: BorderSide(width: 2, color: mainColor)),
                                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(width: 2, color: mainColor)),
                                   contentPadding: const EdgeInsets.symmetric(vertical: 0),
@@ -189,12 +231,60 @@ class NewCategoryState extends State<NewCategory> {
                         ),
                         const SizedBox(height: 30),
 
-                        /* LIMITS BLOCK */
+                        /* TIME LIMITS/TYPE BLOCK */
                         SizedBox(
                           width: screenWidth * 0.8,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Text(
+                                "Type",
+                                style: TextStyle(
+                                    color: mainColor,
+                                    fontSize: 16,
+                                    fontFamily: "Inter",
+                                    fontWeight: FontWeight.w400
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(left: 12),
+                                child: DropdownButton(
+                                  underline: const SizedBox(),
+                                  value: dropDownValue,
+                                  borderRadius: BorderRadius.circular(5),
+                                  items: <String>['Useful', 'Wasted', 'Rest'].map<DropdownMenuItem<String>>((String value) {
+                                    setState((){
+                                      switch(value){
+                                        case "Useful":
+                                          dropDownColor = Colors.green;
+                                          break;
+                                        case "Wasted":
+                                          dropDownColor = Colors.redAccent;
+                                          break;
+                                        case "Rest":
+                                          dropDownColor = Colors.orangeAccent;
+                                        break;
+                                      }
+                                    });
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value + " Time" + "   ",
+                                        style: TextStyle(color: dropDownColor),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value){
+                                    setState((){
+                                      dropDownValue = value.toString();
+                                      timeType = value.toString().toLowerCase();
+                                    });
+                                  },
+                                  iconEnabledColor: getEnabledIconColor(),
+                                  style: const TextStyle(fontSize: 14, fontFamily: "Inter"),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
                               Text(
                                 "Limits",
                                 style: TextStyle(
@@ -204,58 +294,118 @@ class NewCategoryState extends State<NewCategory> {
                                     fontWeight: FontWeight.w400
                                 ),
                               ),
-                              TextButton(
-                                onPressed: (){
-                                  showDialog<void>(
-                                      context: context,
-                                      builder: (BuildContext context){
-                                        return TimeLimitModal(context);
-                                      }
-                                  );
-                                },
-                                style: ButtonStyle(
-                                  overlayColor: MaterialStateColor.resolveWith((states) => mainColor.withOpacity(0.25)),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
-                                    Icon(Icons.add_rounded, size: 22, color: Color(0xff6e6e6e),),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      "Minimal Time",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontFamily: "Inter",
-                                          fontWeight: FontWeight.w400
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextButton(
+                                      onPressed: (){
+                                        showDialog<void>(
+                                            context: context,
+                                            builder: (BuildContext context){
+                                              return TimeLimitModal(context, mainColor: mainColor, boxTitle: "Minimal Time", inputFunction: inputLimitTime);
+                                            }
+                                        );
+                                      },
+                                      style: ButtonStyle(
+                                        overlayColor: MaterialStateColor.resolveWith((states) => mainColor.withOpacity(0.25)),
+                                      ),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          const Icon(Icons.add_rounded, size: 22, color: Color(0xff6e6e6e)),
+                                          const SizedBox(width: 5),
+                                          const Text(
+                                            "Minimal Time",
+                                            style: TextStyle(
+                                                color: Color(0xff414141),
+                                                fontSize: 14,
+                                                fontFamily: "Inter",
+                                                fontWeight: FontWeight.w400
+                                            ),
+                                          ),
+                                          const SizedBox(width: 20),
+                                          minTime > 0 ? Text(
+                                            getTime(minTime),
+                                            style: TextStyle(
+                                                color: mainColor,
+                                                fontSize: 14,
+                                                fontFamily: "Inter",
+                                                fontWeight: FontWeight.w400
+                                            ),
+                                          ) : const SizedBox(),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  minTime > 0 ? TextButton(
+                                    style: ButtonStyle(
+                                      overlayColor: MaterialStateColor.resolveWith((states) => mainColor.withOpacity(0.25)),
+                                    ),
+                                    onPressed: () {
+                                      setState((){
+                                        minTime = 0;
+                                      });
+                                    },
+                                    child: const Icon(Icons.delete_outline_rounded, color: Colors.redAccent),
+                                  ) : const SizedBox()
+                                ],
                               ),
-                              TextButton(
-                                onPressed: (){},
-                                style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => mainColor.withOpacity(0.25))),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
-                                    Icon(Icons.add_rounded, size: 22, color: Color(0xff6e6e6e),),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      "Maximal Time",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontFamily: "Inter",
-                                          fontWeight: FontWeight.w400
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextButton(
+                                      onPressed: (){
+                                        showDialog<void>(
+                                            context: context,
+                                            builder: (BuildContext context){
+                                              return TimeLimitModal(context, mainColor: mainColor, boxTitle: "Maximal Time", inputFunction: inputLimitTime);
+                                            }
+                                        );
+                                      },
+                                      style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => mainColor.withOpacity(0.25))),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          const Icon(Icons.add_rounded, size: 22, color: Color(0xff6e6e6e),),
+                                          const SizedBox(width: 5),
+                                          const Text(
+                                            "Maximal Time",
+                                            style: TextStyle(
+                                                color: Color(0xff414141),
+                                                fontSize: 14,
+                                                fontFamily: "Inter",
+                                                fontWeight: FontWeight.w400
+                                            ),
+                                          ),
+                                          const SizedBox(width: 20),
+                                          maxTime > 0 ? Text(
+                                            getTime(maxTime),
+                                            style: TextStyle(
+                                                color: mainColor,
+                                                fontSize: 14,
+                                                fontFamily: "Inter",
+                                                fontWeight: FontWeight.w400
+                                            ),
+                                          ) : const SizedBox(),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-
+                                  ),
+                                  maxTime > 0 ? TextButton(
+                                    style: ButtonStyle(
+                                      overlayColor: MaterialStateColor.resolveWith((states) => mainColor.withOpacity(0.25)),
+                                    ),
+                                    onPressed: () {
+                                      setState((){
+                                        maxTime = 0;
+                                      });
+                                    },
+                                    child: const Icon(Icons.delete_outline_rounded, color: Colors.redAccent),
+                                  ) : const SizedBox()
+                                ],
+                              )
                             ],
                           ),
                         )
