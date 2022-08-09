@@ -380,12 +380,12 @@ class NewCategoryState extends State<NewCategory> {
                           );
                         },
                         child: SizedBox(
-                          height: 55, width: 55,
+                          height: 60, width: 60,
                           child: Stack(
                             children: [
                               Positioned(
                                 child: Container(
-                                  height: 55, width: 55,
+                                  height: 60, width: 60,
                                   decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
@@ -395,14 +395,14 @@ class NewCategoryState extends State<NewCategory> {
                                           offset: const Offset(0, 3), // changes position of shadow
                                         ),
                                       ],
-                                      borderRadius: BorderRadius.circular(50),
+                                      borderRadius: BorderRadius.circular(60),
                                       color: Colors.white
                                   ),
                                 ),
                               ),
                               Positioned(
                                   child: Center(
-                                    child: SvgPicture.asset("assets/category-icons/$mainIcon.svg", color: mainColor, width: 35, height: 35),
+                                    child: SvgPicture.asset("assets/category-icons/$mainIcon.svg", color: mainColor, width: 30, height: 30),
                                   )
                               ),
                             ],
