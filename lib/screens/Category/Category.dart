@@ -9,7 +9,6 @@ late List<GDPData> _chartData;
 
 class GDPData{
   GDPData(this.categoryTitle, this.gdp, this.colors, this.type);
-
   final String categoryTitle;
   final int gdp;
   final Color colors;
@@ -26,10 +25,11 @@ class CategoryPage extends StatefulWidget {
 
 
 class CategoryPageState extends State<CategoryPage>{
-  final int usefulTime = 0;
-  final int wastedTime = 0;
-  final int restTime = 0;
+  int usefulTime = 0;
+  int wastedTime = 0;
+  int restTime = 0;
   List data = getCategoriesData();
+
 
   List<GDPData> getCharData() {
     final List<GDPData> chartData = [
@@ -103,10 +103,7 @@ class CategoryPageState extends State<CategoryPage>{
       return TextButton(
           style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const NewCategory()),
-            );
+            Navigator.push(context, MaterialPageRoute(builder: (context) => NewCategory(index: categoriesLength + 1)));
           },
           child: Column(
             children: [

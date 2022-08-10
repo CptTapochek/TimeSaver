@@ -7,7 +7,8 @@ import 'package:time_saver/Data/iconsColors.dart';
 
 
 class NewCategory extends StatefulWidget {
-  const NewCategory({Key? key}) : super(key: key);
+  const NewCategory({Key? key, required this.index}) : super(key: key);
+  final int index;
 
   @override
   State<NewCategory> createState() => NewCategoryState();
@@ -24,6 +25,7 @@ class NewCategoryState extends State<NewCategory> {
   String timeType = "";
   Color dropDownColor = const Color(0xff000000);
   int maxTime = 0, minTime = 0;
+  bool validateTitle = true;
 
   @override
   void initState() {
@@ -84,6 +86,37 @@ class NewCategoryState extends State<NewCategory> {
       return "${hours < 10 ? '0' : ''}${hours.toString()}:${minutes < 10 ? '0' : ''}${minutes.toString()}";
     }
 
+    changeState(color, icon){
+      setState((){
+        mainIcon = icon;
+        mainColor = color;
+      });
+    }
+
+    addNewCategory(){
+      if(title.trim().isEmpty){
+        setState((){
+          validateTitle = false;
+        });
+      } else {
+        bool existLimit = minTime > 0 || maxTime > 0;
+
+        var data = {
+          "index": widget.index,
+          "title": title,
+          "time": 0,
+          "color": mainColor,
+          "icon": mainIcon,
+          "type": timeType,
+          "limit": existLimit,
+          "min": minTime,
+          "max": maxTime
+        };
+        print(":::::::::::::::::::$data");
+        Navigator.pop(context);
+      }
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
@@ -92,7 +125,7 @@ class NewCategoryState extends State<NewCategory> {
           decoration: BoxDecoration(
             color: mainColor,
           ),
-          child: AppBarContent(mainColor: mainColor),
+          child: AppBarContent(mainColor: mainColor, addNewCategory: addNewCategory),
         ),
       ),
       body: Container(
@@ -142,14 +175,14 @@ class NewCategoryState extends State<NewCategory> {
                                   alignLabelWithHint: _focusNode.hasFocus ? true : true,
                                   labelText: "Title",
                                   labelStyle: TextStyle(
-                                    color: _focusNode.hasFocus ? mainColor : const Color(0xffbbbaba),
+                                    color: _focusNode.hasFocus ? mainColor : validateTitle ? const Color(0xffbbbaba) : Colors.red,
                                     fontSize: _focusNode.hasFocus ? 18 : 18,
                                     fontWeight: FontWeight.w400,
                                   ),
                                   counterText: "",
                                   hintMaxLines: 1,
                                   fillColor: Colors.transparent,
-                                  //enabledBorder: UnderlineInputBorder(borderSide: BorderSide(width: 2, color: mainColor)),
+                                  enabledBorder: UnderlineInputBorder(borderSide: BorderSide(width: 2, color: validateTitle ? const Color(0xffbbbaba) : Colors.red)),
                                   border: UnderlineInputBorder(borderSide: BorderSide(width: 2, color: mainColor)),
                                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(width: 2, color: mainColor)),
                                   contentPadding: const EdgeInsets.symmetric(vertical: 0),
@@ -158,6 +191,7 @@ class NewCategoryState extends State<NewCategory> {
                                 onChanged: (value){
                                   setState((){
                                     title = value;
+                                    validateTitle = true;
                                   });
                                 }
                               ),
@@ -303,7 +337,7 @@ class NewCategoryState extends State<NewCategory> {
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
-                                          const Icon(Icons.add_rounded, size: 22, color: Color(0xff6e6e6e),),
+                                          const Icon(Icons.add_rounded, size: 22, color: Color(0xff6e6e6e)),
                                           const SizedBox(width: 5),
                                           const Text(
                                             "Maximal Time",
@@ -375,7 +409,7 @@ class NewCategoryState extends State<NewCategory> {
                           showDialog<void>(
                               context: context,
                               builder: (BuildContext context){
-                                return ChooseIconColor(context, colorData: colorData, mainIcon: mainIcon);
+                                return ChooseIconColor(context, colorData: colorData, mainIcon: mainIcon, changeState: changeState);
                               }
                           );
                         },

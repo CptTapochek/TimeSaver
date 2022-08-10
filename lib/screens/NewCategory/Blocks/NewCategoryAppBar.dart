@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 
 class AppBarContent extends StatefulWidget {
-  const AppBarContent({Key? key, required this.mainColor}) : super(key: key);
+  const AppBarContent({Key? key, required this.mainColor, required this.addNewCategory}) : super(key: key);
   final Color mainColor;
+  final Function addNewCategory;
 
   @override
   State<AppBarContent> createState() => AppBarContentState();
@@ -17,8 +18,6 @@ class AppBarContentState extends State<AppBarContent> {
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
     Color mainColor = widget.mainColor;
 
     return SafeArea(
@@ -36,7 +35,7 @@ class AppBarContentState extends State<AppBarContent> {
                       Navigator.pop(context);
                     },
                     splashColor: Colors.transparent,
-                    icon: Icon(Icons.close_outlined, size: 30,),
+                    icon: const Icon(Icons.close_outlined, size: 30,),
                     color: Colors.white
                 ),
                 const Text(
@@ -49,10 +48,8 @@ class AppBarContentState extends State<AppBarContent> {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.check_outlined, size: 30,),
+                    onPressed: () => widget.addNewCategory(),
+                    icon: const Icon(Icons.check_outlined, size: 30,),
                     color: Colors.white
                 ),
               ],

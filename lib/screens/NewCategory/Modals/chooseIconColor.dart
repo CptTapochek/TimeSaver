@@ -4,9 +4,10 @@ import 'package:time_saver/Data/iconsColors.dart';
 
 
 class ChooseIconColor extends StatefulWidget{
-  const ChooseIconColor(BuildContext context, {Key? key ,this.colorData, this.mainIcon}) : super(key: key);
+  const ChooseIconColor(BuildContext context, {Key? key ,this.colorData, this.mainIcon, required this.changeState}) : super(key: key);
   final dynamic colorData;
   final dynamic mainIcon;
+  final Function changeState;
 
   @override
   State<ChooseIconColor> createState() => ChooseIconColorState();
@@ -19,7 +20,7 @@ class ChooseIconColorState extends State<ChooseIconColor> {
   String mainColorCategory = "";
   List iconsList = getListOfIcons();
   List colorsList = getListOfColors();
-  bool colorsSecondScreen = false;
+  bool colorSecondScreen = false;
   int colorPallet = 0;
 
   @override
@@ -191,7 +192,10 @@ class ChooseIconColorState extends State<ChooseIconColor> {
                               ),
                             ),
                             TextButton(
-                              onPressed: (){},
+                              onPressed: (){
+                                widget.changeState(mainColor, mainIcon);
+                                Navigator.pop(context);
+                              },
                               style: ButtonStyle(
                                 overlayColor: MaterialStateColor.resolveWith((states) => const Color(0xff8a8a8a).withOpacity(0.25)),
                               ),
@@ -221,20 +225,20 @@ class ChooseIconColorState extends State<ChooseIconColor> {
                           child: Column(
                             children: [
                               const SizedBox(height: 10),
-                              for(var idx = 0; !colorsSecondScreen ? idx < colorsList.length : idx < colorsList[colorPallet].length; idx++)
+                              for(var idx = 0; !colorSecondScreen ? idx < colorsList.length : idx < colorsList[colorPallet].length; idx++)
                                 if(idx % 4 == 0)
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       for(var jdx = idx; jdx < idx + 4; jdx++)
-                                        if(!colorsSecondScreen ? jdx < colorsList.length : jdx < colorsList[colorPallet].length)
+                                        if(!colorSecondScreen ? jdx < colorsList.length : jdx < colorsList[colorPallet].length)
                                           TextButton(
                                             onPressed: (){
                                               setState((){
-                                                if(colorsSecondScreen){
+                                                if(colorSecondScreen){
                                                   mainColor = colorsList[colorPallet][jdx];
                                                 }else{
-                                                  colorsSecondScreen = true;
+                                                  colorSecondScreen = true;
                                                   colorPallet = jdx;
                                                 }
                                               });
@@ -251,24 +255,37 @@ class ChooseIconColorState extends State<ChooseIconColor> {
                                                     child: Container(
                                                       width: 50, height: 50,
                                                       decoration: BoxDecoration(
-                                                          color: colorsSecondScreen ? colorsList[colorPallet][jdx] : colorsList[jdx][0],
+                                                          color: colorSecondScreen ? colorsList[colorPallet][jdx] : colorsList[jdx][0],
                                                           borderRadius: BorderRadius.circular(100)
                                                       ),
                                                     ),
                                                   ),
-                                                  if(!colorsSecondScreen)
-                                                  colorsList[jdx].toString().contains(mainColor.toString()) ? Positioned(
-                                                    child: Center(
-                                                      child: Container(
-                                                        width: 42, height: 42,
-                                                        decoration: BoxDecoration(
+                                                  if(!colorSecondScreen)
+                                                    colorsList[jdx].toString().contains(mainColor.toString()) ? Positioned(
+                                                      child: Center(
+                                                        child: Container(
+                                                          width: 42, height: 42,
+                                                          decoration: BoxDecoration(
                                                             color: Colors.transparent,
                                                             border: Border.all(width: 3, color: Colors.white),
                                                             borderRadius: BorderRadius.circular(100)
+                                                          ),
                                                         ),
-                                                      ),
-                                                    )
-                                                  ) : const SizedBox()
+                                                      )
+                                                    ) : const SizedBox()
+                                                  else
+                                                    colorsList[colorPallet][jdx].toString() == mainColor.toString() ? Positioned(
+                                                        child: Center(
+                                                          child: Container(
+                                                            width: 42, height: 42,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors.transparent,
+                                                                border: Border.all(width: 3, color: Colors.white),
+                                                                borderRadius: BorderRadius.circular(100)
+                                                            ),
+                                                          ),
+                                                        )
+                                                    ) : const SizedBox()
                                                 ],
                                               ),
                                             ),
@@ -284,7 +301,25 @@ class ChooseIconColorState extends State<ChooseIconColor> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            TextButton(
+                            colorSecondScreen ? TextButton(
+                              onPressed: () {
+                                setState((){
+                                  colorSecondScreen = false;
+                                });
+                              },
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateColor.resolveWith((states) => const Color(0xff8a8a8a).withOpacity(0.25)),
+                              ),
+                              child: const Text(
+                                "Back",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xff676767),
+                                  fontFamily: "Inter",
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ) : TextButton(
                               onPressed: () => Navigator.pop(context),
                               style: ButtonStyle(
                                 overlayColor: MaterialStateColor.resolveWith((states) => const Color(0xff8a8a8a).withOpacity(0.25)),
@@ -300,7 +335,10 @@ class ChooseIconColorState extends State<ChooseIconColor> {
                               ),
                             ),
                             TextButton(
-                              onPressed: (){},
+                              onPressed: (){
+                                widget.changeState(mainColor, mainIcon);
+                                Navigator.pop(context);
+                              },
                               style: ButtonStyle(
                                 overlayColor: MaterialStateColor.resolveWith((states) => const Color(0xff8a8a8a).withOpacity(0.25)),
                               ),

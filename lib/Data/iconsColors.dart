@@ -84,8 +84,8 @@ List colors = [
   /* Grey */
   [
     const Color(0xffa8a8a8), const Color(0xff262626), const Color(0xff666666), const Color(0xff5e5e5e), const Color(0xff1e1e18),
-    const Color(0xff545454), const Color(0xffa8a8a8), const Color(0xff6E7884), const Color(0xff636363), const Color(0xff939393),
-    const Color(0xff525252), const Color(0xff323234), const Color(0xffB5B5B7)
+    const Color(0xff545454), const Color(0xff6E7884), const Color(0xff636363), const Color(0xff939393), const Color(0xff525252),
+    const Color(0xff323234), const Color(0xffB5B5B7)
   ],
 ];
 
