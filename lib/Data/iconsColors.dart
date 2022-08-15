@@ -3,90 +3,35 @@ import 'package:flutter/material.dart';
 
 List colors = [
   /* Red */
-  [
-    const Color(0xff5E1914), const Color(0xffD21F3C), const Color(0xffCA3433), const Color(0xffBF0A30), const Color(0xffFF2800),
-    const Color(0xff420D09), const Color(0xffB80F0A), const Color(0xff8D021F), const Color(0xff933A16), const Color(0xffB7365B),
-  ],
-  [
-    const Color(0xffFF0901), const Color(0xff7D181C), const Color(0xffEC3B55), const Color(0xffA35954), const Color(0xff810002),
-    const Color(0xffB32124), const Color(0xffE20F5D), const Color(0xffC41709), const Color(0xffCF5B5D), const Color(0xffF77D74),
-    const Color(0xffEE3024),
-  ],
+  ["5E1914", "D21F3C", "CA3433", "BF0A30", "FF2800", "420D09", "B80F0A", "8D021F", "933A16", "B7365B"],
+  ["FF0901", "7D181C", "EC3B55", "A35954", "810002", "B32124", "E20F5D", "C41709", "CF5B5D", "F77D74", "EE3024"],
 
   /* Orange */
-  [
-    const Color(0xffFC6600), const Color(0xffF9812A), const Color(0xff8B4000), const Color(0xffF9A602), const Color(0xffFD6A02),
-    const Color(0xff883000), const Color(0xffEB9605), const Color(0xff793802), const Color(0xffFF7417), const Color(0xff964000),
-  ],
-  [
-    const Color(0xff813F0B), const Color(0xffEF7215), const Color(0xffFDA50F), const Color(0xffCC7722), const Color(0xffEF820D),
-    const Color(0xffB1560F), const Color(0xffB3672B), const Color(0xffCB5C0D), const Color(0xffD7722C), const Color(0xffFFBF00),
-    const Color(0xffF05E23), const Color(0xffF79862)
-  ],
+  ["FC6600", "F9812A", "8B4000", "F9A602", "FD6A02", "883000", "EB9605", "793802", "FF7417", "964000"],
+  ["813F0B", "EF7215", "FDA50F", "CC7722", "EF820D", "B1560F", "B3672B", "CB5C0D", "D7722C", "FFBF00", "F05E23", "F79862"],
 
   /* Yellow */
-  [
-    const Color(0xffF8DE7E), const Color(0xffFADA5E), const Color(0xffF9A602), const Color(0xffFFD300), const Color(0xffD2B55B),
-    const Color(0xffC3B091), const Color(0xffDAA520), const Color(0xffFCF4A3), const Color(0xffFCD12A), const Color(0xffFFC30B),
-  ],
-  [
-    const Color(0xffC49102), const Color(0xffFCE205), const Color(0xffFDA50F), const Color(0xffCC7722), const Color(0xffFFBF00),
-    const Color(0xffEEDC82), const Color(0xffFFE5B4), const Color(0xffEFFD5F), const Color(0xffF8E473), const Color(0xffFEDC56),
-    const Color(0xffFFDDAF), const Color(0xffCEB180),
-  ],
+  ["F8DE7E", "FADA5E", "F9A602", "FFD300", "D2B55B", "C3B091", "DAA520", "FCF4A3", "FCD12A", "FFC30B"],
+  ["C49102", "FCE205", "FDA50F", "CC7722", "FFBF00", "EEDC82", "FFE5B4", "EFFD5F", "F8E473", "FEDC56", "FFDDAF", "CEB180"],
 
   /* Green */
-  [
-    const Color(0xff0B6623), const Color(0xff9DC183), const Color(0xff708238), const Color(0xffC6E945), const Color(0xff3E704C),
-    const Color(0xff00A86B), const Color(0xff8E9678), const Color(0xff4F7942), const Color(0xff29AB87), const Color(0xffA9B99C),
-    const Color(0xff89995A), const Color(0xff97FB97),
-  ],
-  [
-    const Color(0xffD0F0BF), const Color(0xff01796F), const Color(0xff00A572),
-    const Color(0xff4B5320), const Color(0xff4FC777), const Color(0xff4BBA16), const Color(0xff39FF14), const Color(0xff444B37),
-    const Color(0xff043927), const Color(0xff679167), const Color(0xff50C778), const Color(0xff2E8B57)
-  ],
+  ["0B6623", "9DC183", "708238", "C6E945", "3E704C", "00A86B", "8E9678", "4F7942", "29AB87", "A9B99C", "89995A", "97FB97"],
+  ["D0F0BF", "01796F", "00A572", "4B5320", "4FC777", "4BBA16", "39FF14", "444B37", "043927", "679167", "50C778", "2E8B57"],
 
   /* Blue */
-  [
-    const Color(0xff3FE0D0), const Color(0xffB0DFE5), const Color(0xff95C8D8), const Color(0xff7EF9FF), const Color(0xff588BAE),
-    const Color(0xff89CFF0), const Color(0xff81D8D0), const Color(0xff4682B4), const Color(0xff57A0D3), const Color(0xff4F97A3),
-    const Color(0xff7285A5), const Color(0xff73C2FB),
-  ],
-  [
-    const Color(0xff1034A6), const Color(0xff008081), const Color(0xff4C516D), const Color(0xff6593F5),
-    const Color(0xff008ECC), const Color(0xff0F52BA), const Color(0xff0080FF), const Color(0xff0E4D92),
-    const Color(0xff000080), const Color(0xff003152), const Color(0xff1D2951), const Color(0xff111E6C)
-  ],
+  ["3FE0D0", "B0DFE5", "95C8D8", "7EF9FF", "588BAE", "89CFF0", "81D8D0", "4682B4", "57A0D3", "4F97A3", "7285A5", "73C2FB"],
+  ["1034A6", "008081", "4C516D", "6593F5", "008ECC", "0F52BA", "0080FF", "0E4D92", "000080", "003152", "1D2951", "111E6C"],
 
   /* Pink */
-  [
-    const Color(0xffFDAB9F), const Color(0xffFE7F9C), const Color(0xffDF5286), const Color(0xffF5C3C2), const Color(0xffFE5BAC),
-    const Color(0xffFF69B4), const Color(0xffF987C5), const Color(0xffF19CBB), const Color(0xffFF66CC), const Color(0xffFF66CC),
-    const Color(0xffFB607F),
-  ],
-  [
-    const Color(0xffFF00FF), const Color(0xffFCA3B7), const Color(0xffFFA6C9), const Color(0xffDE6FA1), const Color(0xffFDB9C8),
-    const Color(0xffDE3163), const Color(0xffFF6FFF), const Color(0xffEC5578), const Color(0xffF64A8A), const Color(0xffF81894),
-    const Color(0xffFC0FC0)
-  ],
+  ["FDAB9F", "FE7F9C", "DF5286", "F5C3C2", "FE5BAC", "FF69B4", "F987C5", "F19CBB", "FF66CC", "FF66CC", "FB607F"],
+  ["ff00ff", "fca3b7", "ffa6c9", "de6fa1", "FDB9C8", "DE3163", "FF6FFF", "EC5578", "F64A8A", "F81894", "FC0FC0"],
 
   /* Purple */
-  [
-    const Color(0xffb48af7), const Color(0xff8c65d3), const Color(0xffb394e8), const Color(0xff6c35a0), const Color(0xffb496f2),
-    const Color(0xff974bf4), const Color(0xff9048b5), const Color(0xffb282e0), const Color(0xff7418a3), const Color(0xffE0B1FF),
-  ],
-  [
-    const Color(0xff760371), const Color(0xffDA72D6), const Color(0xff68053E), const Color(0xff63366D), const Color(0xff730397),
-    const Color(0xffCDADDB), const Color(0xff63366D), const Color(0xff9669E0), const Color(0xff9270CB), const Color(0xff887DAF),
-  ],
+  ["b48af7", "8c65d3", "b394e8", "6c35a0", "b496f2", "974bf4", "9048b5", "b282e0", "7418a3", "e0b1ff"],
+  ["760371", "da72d6", "68053e", "63366d", "730397", "cdaddb", "63366d", "9669e0", "9270cb", "887daf"],
 
   /* Grey */
-  [
-    const Color(0xffa8a8a8), const Color(0xff262626), const Color(0xff666666), const Color(0xff5e5e5e), const Color(0xff1e1e18),
-    const Color(0xff545454), const Color(0xff6E7884), const Color(0xff636363), const Color(0xff939393), const Color(0xff525252),
-    const Color(0xff323234), const Color(0xffB5B5B7)
-  ],
+  ["a8a8a8", "262626", "666666", "5e5e5e", "1e1e18", "545454", "6e7884", "636363", "939393", "525252", "323234", "b5b5b7"],
 ];
 
 List icons = [
@@ -99,7 +44,7 @@ List icons = [
 
 getRandomColor(){
   dynamic colorArray;
-  Color pallet = const Color(0xff000000);
+  Color pallet = const Color(0xffffffff);
   String color = "";
 
   int randomColorIndex = Random().nextInt(colors.length);
@@ -119,7 +64,7 @@ getRandomColor(){
       int randomPaletteIndex = Random().nextInt(colorArray.length);
       for(var jdx = 0; jdx < colorArray.length; jdx++){
         if(jdx == randomPaletteIndex){
-          pallet = colorArray[jdx];
+          pallet = Color(int.parse("0xff${colorArray[jdx]}"));
         }
       }
     }

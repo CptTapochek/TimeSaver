@@ -37,7 +37,10 @@ class ChooseIconColorState extends State<ChooseIconColor> {
   Widget build(BuildContext context){
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    String mainColorString = mainColor.toString().replaceAll("Color(0xff", "").replaceAll(")", "");
 
+
+    print(colorsList);
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       insetPadding: EdgeInsets.zero,
@@ -236,7 +239,7 @@ class ChooseIconColorState extends State<ChooseIconColor> {
                                             onPressed: (){
                                               setState((){
                                                 if(colorSecondScreen){
-                                                  mainColor = colorsList[colorPallet][jdx];
+                                                  mainColor = Color(int.parse("0xff${colorsList[colorPallet][jdx]}"));
                                                 }else{
                                                   colorSecondScreen = true;
                                                   colorPallet = jdx;
@@ -255,13 +258,15 @@ class ChooseIconColorState extends State<ChooseIconColor> {
                                                     child: Container(
                                                       width: 50, height: 50,
                                                       decoration: BoxDecoration(
-                                                          color: colorSecondScreen ? colorsList[colorPallet][jdx] : colorsList[jdx][0],
+                                                          color: colorSecondScreen ?
+                                                            Color(int.parse("0xff${colorsList[colorPallet][jdx]}")) : 
+                                                            Color(int.parse("0xff${colorsList[jdx][0]}")),
                                                           borderRadius: BorderRadius.circular(100)
                                                       ),
                                                     ),
                                                   ),
                                                   if(!colorSecondScreen)
-                                                    colorsList[jdx].toString().contains(mainColor.toString()) ? Positioned(
+                                                    colorsList[jdx].toString().toLowerCase().contains(mainColorString) ? Positioned(
                                                       child: Center(
                                                         child: Container(
                                                           width: 42, height: 42,
@@ -274,7 +279,7 @@ class ChooseIconColorState extends State<ChooseIconColor> {
                                                       )
                                                     ) : const SizedBox()
                                                   else
-                                                    colorsList[colorPallet][jdx].toString() == mainColor.toString() ? Positioned(
+                                                    colorsList[colorPallet][jdx].toString().toLowerCase() == mainColorString ? Positioned(
                                                         child: Center(
                                                           child: Container(
                                                             width: 42, height: 42,

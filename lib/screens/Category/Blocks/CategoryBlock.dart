@@ -81,7 +81,7 @@ class CategoryState extends State<Category> {
                 width: screenWidth * 0.14, height: screenWidth * 0.14,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
-                  color: data["color"],
+                  color: Color(int.parse("0xff${data["color"]}")),
                 ),
                 child: Stack(
                   children: [
@@ -101,7 +101,7 @@ class CategoryState extends State<Category> {
                 style: TextStyle(
                   fontFamily: "Inter",
                   fontWeight: FontWeight.w600,
-                  color: data["color"],
+                  color: Color(int.parse("0xff${data["color"]}")),
                   fontSize: screenWidth * 0.036
                 ),
               )

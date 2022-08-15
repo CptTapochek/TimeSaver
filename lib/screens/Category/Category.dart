@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:time_saver/screens/Category/Blocks/CategoryBlock.dart';
 import 'package:time_saver/Data/data.dart';
 import 'package:time_saver/screens/NewCategory/NewCategory.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 late List<GDPData> _chartData;
@@ -30,6 +32,14 @@ class CategoryPageState extends State<CategoryPage>{
   int restTime = 0;
   List data = getCategoriesData();
 
+  Future <void> getCategoriesStorage() async{
+    final categories = await SharedPreferences.getInstance();
+    await categories.setInt("count", 10);
+    final int? countCategories = categories.getInt("count");
+
+    print("+++++++++++++++${countCategories.toString()}");
+  }
+
 
   List<GDPData> getCharData() {
     final List<GDPData> chartData = [
@@ -38,13 +48,13 @@ class CategoryPageState extends State<CategoryPage>{
         GDPData(
             data[0]["category_$idx"] != null ? data[0]["category_$idx"]["title"] : "none",
             data[0]["category_$idx"] != null ? data[0]["category_$idx"]["time"] : 1,
-            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["color"] : const Color(0xffc2c2c2),
+            data[0]["category_$idx"] != null ? Color(int.parse("0xff${data[0]["category_$idx"]["color"]}")) : const Color(0xffc2c2c2),
             data[0]["category_$idx"] != null ? data[0]["category_$idx"]["type"] : "none"
         ) :
         GDPData(
             data[0]["category_$idx"] != null ? data[0]["category_$idx"]["title"] : "",
             data[0]["category_$idx"] != null ? data[0]["category_$idx"]["time"] : 0,
-            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["color"] : Colors.transparent,
+            data[0]["category_$idx"] != null ? Color(int.parse("0xff${data[0]["category_$idx"]["color"]}")) : Colors.transparent,
             data[0]["category_$idx"] != null ? data[0]["category_$idx"]["type"] : ""
         ),
     ];
@@ -59,6 +69,7 @@ class CategoryPageState extends State<CategoryPage>{
 
   @override
   Widget build(BuildContext context){
+    getCategoriesStorage();
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     bool limit = false;
