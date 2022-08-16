@@ -5,8 +5,7 @@ void editCategories(){
 }
 
 class AppBarContent extends StatefulWidget {
-  const AppBarContent({Key? key, required this.mainColor}) : super(key: key);
-  final Color mainColor;
+  const AppBarContent({Key? key}) : super(key: key);
 
   @override
   State<AppBarContent> createState() => AppBarContentState();
@@ -20,7 +19,6 @@ class AppBarContentState extends State<AppBarContent> {
 
   @override
   Widget build(BuildContext context) {
-    Color mainColor = widget.mainColor;
 
     return SafeArea(
       top: true,
@@ -32,7 +30,7 @@ class AppBarContentState extends State<AppBarContent> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const <Widget>[
-                IconButton(onPressed: editCategories, icon: Icon(Icons.menu), color: Colors.white),
+                IconButton(onPressed: editCategories, icon: Icon(Icons.menu_rounded), color: Colors.white),
                 Text(
                   '1Day',
                   style: TextStyle(
@@ -63,11 +61,6 @@ class AppBarContentState extends State<AppBarContent> {
                       backgroundColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
                       shadowColor: MaterialStateColor.resolveWith((states) => Colors.transparent)
                     ),
-                    // style: ElevatedButton.styleFrom(
-                    //     elevation: 0.0,
-                    //     primary: mainColor,
-                    //     shadowColor: Colors.transparent,
-                    // ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -77,11 +70,11 @@ class AppBarContentState extends State<AppBarContent> {
                             borderRadius: BorderRadius.circular(2.5),
                             color: Colors.white,
                           ),
-                          child: Text(
+                          child: const Text(
                               '30',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: mainColor,
+                                color: Color(0xff123959),
                                 fontFamily: "Inter",
                               )
                           ),

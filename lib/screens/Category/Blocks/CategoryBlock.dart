@@ -80,7 +80,7 @@ class CategoryState extends State<Category> {
               Container(
                 width: screenWidth * 0.14, height: screenWidth * 0.14,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(screenWidth * 0.04),
                   color: Color(int.parse("0xff${data["color"]}")),
                 ),
                 child: Stack(

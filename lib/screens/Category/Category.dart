@@ -126,10 +126,11 @@ class CategoryPageState extends State<CategoryPage>{
               Container(
                 width: screenWidth * 0.12, height: screenWidth * 0.12,
                 decoration: BoxDecoration(
-                    color: const Color(0xffc2c2c2),
-                    borderRadius: BorderRadius.circular(50)
+                    color: const Color(0xffdadada),
+                    border: Border.all(width: 1, color: const Color(0xffc2c2c2)),
+                    borderRadius: BorderRadius.circular(screenWidth * 0.035)
                 ),
-                child: Icon(Icons.add, color: Colors.white, size: screenWidth * 0.08,),
+                child: Icon(Icons.add_rounded, color: Colors.white, size: screenWidth * 0.08),
               ),
               const SizedBox(height: 5),
               const Text(""),
@@ -349,6 +350,13 @@ class CategoryPageState extends State<CategoryPage>{
                     for(var index = idx; index <= categoryLength(idx); index++)
                       data[0]["category_$index"] != null ? Category(data: data[0]["category_$index"]) :
                       !limit ? addCategoryButton() : const SizedBox()
+                  ],
+                )
+              else if(categoriesLength == 12 && idx == 12 || categoriesLength == 16 && idx == 16)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    addCategoryButton()
                   ],
                 )
           ],

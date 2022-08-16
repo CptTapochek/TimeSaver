@@ -40,7 +40,6 @@ class ChooseIconColorState extends State<ChooseIconColor> {
     String mainColorString = mainColor.toString().replaceAll("Color(0xff", "").replaceAll(")", "");
 
 
-    print(colorsList);
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       insetPadding: EdgeInsets.zero,
@@ -79,7 +78,7 @@ class ChooseIconColorState extends State<ChooseIconColor> {
                                   width: 50, height: 50,
                                   decoration: BoxDecoration(
                                       color: mainColor,
-                                      borderRadius: BorderRadius.circular(100)
+                                      borderRadius: BorderRadius.circular(15)
                                   ),
                                 ),
                               )
@@ -150,7 +149,7 @@ class ChooseIconColorState extends State<ChooseIconColor> {
                                                             width: 1,
                                                             color: iconsList[jdx] == mainIcon ? Colors.transparent : const Color(0xffd7d7d7)
                                                         ),
-                                                        borderRadius: BorderRadius.circular(100)
+                                                        borderRadius: BorderRadius.circular(15)
                                                       ),
                                                     ),
                                                   )
@@ -261,7 +260,7 @@ class ChooseIconColorState extends State<ChooseIconColor> {
                                                           color: colorSecondScreen ?
                                                             Color(int.parse("0xff${colorsList[colorPallet][jdx]}")) : 
                                                             Color(int.parse("0xff${colorsList[jdx][0]}")),
-                                                          borderRadius: BorderRadius.circular(100)
+                                                          borderRadius: BorderRadius.circular(15)
                                                       ),
                                                     ),
                                                   ),
@@ -273,7 +272,7 @@ class ChooseIconColorState extends State<ChooseIconColor> {
                                                           decoration: BoxDecoration(
                                                             color: Colors.transparent,
                                                             border: Border.all(width: 3, color: Colors.white),
-                                                            borderRadius: BorderRadius.circular(100)
+                                                            borderRadius: BorderRadius.circular(13)
                                                           ),
                                                         ),
                                                       )
@@ -286,7 +285,7 @@ class ChooseIconColorState extends State<ChooseIconColor> {
                                                             decoration: BoxDecoration(
                                                                 color: Colors.transparent,
                                                                 border: Border.all(width: 3, color: Colors.white),
-                                                                borderRadius: BorderRadius.circular(100)
+                                                                borderRadius: BorderRadius.circular(13)
                                                             ),
                                                           ),
                                                         )

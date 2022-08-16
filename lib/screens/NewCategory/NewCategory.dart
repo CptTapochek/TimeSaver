@@ -432,7 +432,7 @@ class NewCategoryState extends State<NewCategory> {
                                             offset: const Offset(0, 3), // changes position of shadow
                                           ),
                                         ],
-                                        borderRadius: BorderRadius.circular(60),
+                                        borderRadius: BorderRadius.circular(15),
                                         color: Colors.white
                                     ),
                                   ),

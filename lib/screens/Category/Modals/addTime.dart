@@ -75,7 +75,7 @@ class AddTimeState extends State<BottomSheetAddTime> {
               children: [
                 Container(
                   height: screenHeight * 0.1,
-                  color: data["color"],
+                  color: Color(int.parse("0xff${data["color"]}")),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -126,7 +126,7 @@ class AddTimeState extends State<BottomSheetAddTime> {
                           margin: const EdgeInsets.only(right: 15),
                           width: screenWidth * 0.13, height: screenWidth * 0.13,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
+                              borderRadius: BorderRadius.circular(screenWidth * 0.035),
                               color: Colors.white
                           ),
                           child: Stack(
@@ -134,7 +134,7 @@ class AddTimeState extends State<BottomSheetAddTime> {
                               Positioned(
                                 child: Center(
                                   child: SvgPicture.asset("assets/category-icons/${data["icon"]}.svg",
-                                      height: screenWidth * 0.07, width: screenWidth * 0.07, color: data["color"]
+                                      height: screenWidth * 0.07, width: screenWidth * 0.07, color: Color(int.parse("0xff${data["color"]}"))
                                   ),
                                 ),
                               )
@@ -292,7 +292,7 @@ class AddTimeState extends State<BottomSheetAddTime> {
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(3),
-                              color: data["color"]
+                              color: Color(int.parse("0xff${data["color"]}"))
                             ),
                           )
                         ),
