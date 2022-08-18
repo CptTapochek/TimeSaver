@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:models/categories_models.dart';
+import 'package:repositories/repository.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:time_saver/screens/Category/Blocks/CategoryBlock.dart';
 import 'package:time_saver/Data/data.dart';
 import 'package:time_saver/screens/NewCategory/NewCategory.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 late List<GDPData> _chartData;
@@ -15,6 +16,32 @@ class GDPData{
   final int gdp;
   final Color colors;
   final String type;
+}
+
+getCategoriesStorage() async {
+  var val = await CategoriesRepository().getAllCategories();
+  List categoryData = [
+    {
+      for(int idx = 0; idx < val.length; idx++){
+        "category_${idx + 1}":{
+          "id": val[val.length - (idx + 1)].id,
+          "indexCategory": val[val.length - (idx + 1)].indexCategory,
+          "title": val[val.length - (idx + 1)].title,
+          "time": val[val.length - (idx + 1)].time,
+          "color": val[val.length - (idx + 1)].color,
+          "icon": val[val.length - (idx + 1)].icon,
+          "type": val[val.length - (idx + 1)].type,
+          "min": val[val.length - (idx + 1)].min,
+          "max": val[val.length - (idx + 1)].max
+        }
+      },
+      for(int jdx = val.length + 1; jdx <= 20; jdx++){
+        "category_$jdx": null,
+      }
+    }
+  ];
+  print("++++++++++$categoryData");
+
 }
 
 
@@ -30,16 +57,7 @@ class CategoryPageState extends State<CategoryPage>{
   int usefulTime = 0;
   int wastedTime = 0;
   int restTime = 0;
-  List data = getCategoriesData();
-
-  Future <void> getCategoriesStorage() async{
-    final categories = await SharedPreferences.getInstance();
-    await categories.setInt("count", 10);
-    final int? countCategories = categories.getInt("count");
-
-    print("+++++++++++++++${countCategories.toString()}");
-  }
-
+  List data = [{"category_1": null}];
 
   List<GDPData> getCharData() {
     final List<GDPData> chartData = [
@@ -64,12 +82,12 @@ class CategoryPageState extends State<CategoryPage>{
   @override
   void initState(){
     _chartData = getCharData();
+    getCategoriesStorage();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context){
-    getCategoriesStorage();
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     bool limit = false;

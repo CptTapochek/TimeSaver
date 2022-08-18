@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
+
 
 /* Test categories data */
 getCategoriesData(){
@@ -11,7 +13,6 @@ getCategoriesData(){
         "color": "c82aec",
         "icon": "airdrop",
         "type": "wasted",
-        "limit": true,
         "min": 0,
         "max": 18000
       },
@@ -22,7 +23,6 @@ getCategoriesData(){
         "color": "6d35d0",
         "icon": "airplane",
         "type": "rest",
-        "limit": true,
         "min": 0,
         "max": 7200
       },
@@ -33,7 +33,8 @@ getCategoriesData(){
         "color": "5c4141",
         "icon": "brush",
         "type": "useful",
-        "limit": false,
+        "min": 0,
+        "max": 0
       },
       "category_4":{
         "index": 4,
@@ -42,7 +43,8 @@ getCategoriesData(){
         "color": "e79818",
         "icon": "car",
         "type": "useful",
-        "limit": false,
+        "min": 0,
+        "max": 0
       },
       "category_5":{
         "index": 5,
@@ -51,7 +53,8 @@ getCategoriesData(){
         "color": "4997dc",
         "icon": "glass",
         "type": "useful",
-        "limit": false,
+        "min": 0,
+        "max": 0
       },
       "category_6":{
         "index": 6,
@@ -60,7 +63,6 @@ getCategoriesData(){
         "color": "b90e36",
         "icon": "heart",
         "type": "rest",
-        "limit": true,
         "min": 28800,
         "max": 30700
       },
@@ -71,7 +73,6 @@ getCategoriesData(){
         "color": "37af47",
         "icon": "game",
         "type": "rest",
-        "limit": true,
         "min": 0,
         "max": 7200
       },
@@ -82,7 +83,6 @@ getCategoriesData(){
         "color": "a3af37",
         "icon": "lamp",
         "type": "rest",
-        "limit": true,
         "min": 0,
         "max": 7200
       },
@@ -93,7 +93,6 @@ getCategoriesData(){
         "color": "e15353",
         "icon": "youtube",
         "type": "rest",
-        "limit": true,
         "min": 0,
         "max": 7200
       },
@@ -104,7 +103,8 @@ getCategoriesData(){
         "color": "31b9ae",
         "icon": "ship",
         "type": "useful",
-        "limit": false,
+        "min": 0,
+        "max": 0
       },
       "category_11": null,
       "category_12": null,

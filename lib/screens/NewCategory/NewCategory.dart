@@ -1,4 +1,7 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:models/categories_models.dart';
+import 'package:repositories/repository.dart';
 import 'package:time_saver/screens/NewCategory/Blocks/NewCategoryAppBar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:time_saver/screens/NewCategory/Modals/timeLimit.dart';
@@ -100,7 +103,7 @@ class NewCategoryState extends State<NewCategory> {
           validateTitle = false;
         });
       } else {
-        bool existLimit = minTime > 0 || maxTime > 0;
+        String mainColorString = mainColor.toString().replaceAll("Color(0xff", "").replaceAll(")", "");
 
         var data = {
           "index": widget.index,
@@ -109,10 +112,23 @@ class NewCategoryState extends State<NewCategory> {
           "color": mainColor,
           "icon": mainIcon,
           "type": timeType,
-          "limit": existLimit,
           "min": minTime,
           "max": maxTime
         };
+
+        final category = CategoriesModel(
+          id: Random().nextInt(100000),
+          indexCategory: widget.index,
+          title: title,
+          time: 0,
+          color: mainColorString,
+          icon: mainIcon,
+          type: timeType,
+          min: minTime,
+          max: maxTime
+        );
+
+        CategoriesRepository().addCategory(category);
         print(":::::::::::::::::::$data");
         Navigator.pop(context);
       }

@@ -16,6 +16,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   carousel_slider: ^4.1.1
   shared_preferences: ^2.0.15
+  models:
+    path: packages/models
+  repositories:
+    path: packages/repositories
 
 dev_dependencies:
   flutter_test:

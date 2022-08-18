@@ -27,6 +27,7 @@ class AddTimeState extends State<BottomSheetAddTime> {
   Widget build(BuildContext context){
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    bool limit = data["max"] > 0 || data["min"] > 0;
 
     getTime(time, range){
       int hours = 0, minutes = 0;
@@ -49,7 +50,7 @@ class AddTimeState extends State<BottomSheetAddTime> {
     getScreenLoadingWidth(){
       double width = 0.0;
 
-      if(data["limit"] == true){
+      if(limit == true){
         if(data["min"] > 0){
           if(data["time"] <= data["max"]){
             width = screenWidth * data["time"]/data["min"];
@@ -88,7 +89,7 @@ class AddTimeState extends State<BottomSheetAddTime> {
                               text: "Range \n",
                               children: [
                                 TextSpan(
-                                    text: data["limit"] ? "${getTime(data["min"], true)} - ${getTime(data["max"], true)}" : "None",
+                                    text: limit ? "${getTime(data["min"], true)} - ${getTime(data["max"], true)}" : "None",
                                     style: const TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.w700,
