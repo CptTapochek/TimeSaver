@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:time_saver/Blocks/AppBar.dart';
 import 'package:time_saver/screens/Category/Category.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:time_saver/blocks/BottomNavigationBar.dart';
 
 
 void main() {
@@ -58,7 +57,7 @@ class MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    getBottomTap(int index) {
+    void getBottomTap(int index) {
       setState(() {
         selectedIndex = index;
       });
@@ -69,10 +68,10 @@ class MainPageState extends State<MainPage> {
         preferredSize: const Size.fromHeight(100),
         child: Container(
           decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Color(0xff0652C5), Color(0xffD4418E)],
-                  begin: Alignment.centerLeft, end: Alignment.bottomRight
-              )
+            gradient: LinearGradient(
+              colors: [Color(0xff0652C5), Color(0xffD4418E)],
+              begin: Alignment.centerLeft, end: Alignment.bottomRight
+            )
           ),
           child: const AppBarContent(),
         ),
@@ -80,8 +79,8 @@ class MainPageState extends State<MainPage> {
       body: _widgetOptions.elementAt(selectedIndex),
       floatingActionButton: TextButton(
         style: ButtonStyle(
-            overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
-            padding: MaterialStateProperty.all(const EdgeInsets.only(top: 0, bottom: 0, left: 20, right: 20))
+          overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
+          padding: MaterialStateProperty.all(const EdgeInsets.only(top: 0, bottom: 0, left: 20, right: 20))
         ),
         onPressed: () => getBottomTap(1),
         child: Container(
@@ -121,7 +120,87 @@ class MainPageState extends State<MainPage> {
           ),
         )
       ),
-      bottomNavigationBar: BottomCustomBar(context, selectedIndex: selectedIndex, getBottomTap: getBottomTap),
+      bottomNavigationBar: SafeArea(
+        bottom: true,
+        child: BottomAppBar(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 1,
+                    blurRadius: 8,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              height: 55,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(child: TextButton(
+                      onPressed: () => getBottomTap(0),
+                      style: ButtonStyle(
+                          overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
+                          padding: MaterialStateProperty.all(const EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10))
+                      ),
+                      child: AnimatedScale(
+                        duration: const Duration(milliseconds: 150),
+                        scale: selectedIndex == 0 ? 1.1 : 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              "assets/system-icons/clock.svg",
+                              width: 24, height: 24, color: const Color(0xffD4418E),
+                            ),
+                            const Text(
+                              "History",
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontFamily: "Inter",
+                                  color: Color(0xffD4418E)
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                  )),
+                  const Expanded(child: Text('')),
+                  Expanded(child: TextButton(
+                      style: ButtonStyle(
+                          overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
+                          padding: MaterialStateProperty.all(const EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10))
+                      ),
+                      onPressed: () => getBottomTap(2),
+                      child: AnimatedScale(
+                        duration: const Duration(milliseconds: 150),
+                        scale: selectedIndex == 2 ? 1.1 : 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              "assets/system-icons/chart.svg",
+                              width: 23, height: 23, color: const Color(0xff0652C5),
+                            ),
+                            const Text(
+                              "Overview",
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontFamily: "Inter",
+                                  color: Color(0xff0652C5)
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                  )),
+                ],
+              ),
+            )
+        ),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

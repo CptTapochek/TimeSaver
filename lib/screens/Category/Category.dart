@@ -18,32 +18,6 @@ class GDPData{
   final String type;
 }
 
-getCategoriesStorage() async {
-  var val = await CategoriesRepository().getAllCategories();
-  List categoryData = [
-    {
-      for(int idx = 0; idx < val.length; idx++){
-        "category_${idx + 1}":{
-          "id": val[val.length - (idx + 1)].id,
-          "indexCategory": val[val.length - (idx + 1)].indexCategory,
-          "title": val[val.length - (idx + 1)].title,
-          "time": val[val.length - (idx + 1)].time,
-          "color": val[val.length - (idx + 1)].color,
-          "icon": val[val.length - (idx + 1)].icon,
-          "type": val[val.length - (idx + 1)].type,
-          "min": val[val.length - (idx + 1)].min,
-          "max": val[val.length - (idx + 1)].max
-        }
-      },
-      for(int jdx = val.length + 1; jdx <= 20; jdx++){
-        "category_$jdx": null,
-      }
-    }
-  ];
-  print("++++++++++$categoryData");
-
-}
-
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({Key? key}) : super(key: key);
@@ -57,23 +31,24 @@ class CategoryPageState extends State<CategoryPage>{
   int usefulTime = 0;
   int wastedTime = 0;
   int restTime = 0;
-  List data = [{"category_1": null}];
+  List data = [{"category_0": null} ,{"category_1": null}];
+  bool loaded = false;
 
   List<GDPData> getCharData() {
     final List<GDPData> chartData = [
-      for(int idx = 1; idx <= data[0].length; idx++)
-        idx == 1 && data[0]["category_$idx"] == null ?
+      for(int idx = 1; idx <= data.length; idx++)
+        idx == 1 && data[idx]["category_$idx"] == null ?
         GDPData(
-            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["title"] : "none",
-            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["time"] : 1,
-            data[0]["category_$idx"] != null ? Color(int.parse("0xff${data[0]["category_$idx"]["color"]}")) : const Color(0xffc2c2c2),
-            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["type"] : "none"
+            data[idx]["category_$idx"] != null ? data[idx]["category_$idx"]["title"] : "none",
+            data[idx]["category_$idx"] != null ? data[idx]["category_$idx"]["time"] : 1,
+            data[idx]["category_$idx"] != null ? Color(int.parse("0xff${data[idx]["category_$idx"]["color"]}")) : const Color(0xffc2c2c2),
+            data[idx]["category_$idx"] != null ? data[idx]["category_$idx"]["type"] : "none"
         ) :
         GDPData(
-            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["title"] : "",
-            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["time"] : 0,
-            data[0]["category_$idx"] != null ? Color(int.parse("0xff${data[0]["category_$idx"]["color"]}")) : Colors.transparent,
-            data[0]["category_$idx"] != null ? data[0]["category_$idx"]["type"] : ""
+            data[idx]["category_$idx"] != null ? data[idx]["category_$idx"]["title"] : "",
+            data[idx]["category_$idx"] != null ? data[idx]["category_$idx"]["time"] : 0,
+            data[idx]["category_$idx"] != null ? Color(int.parse("0xff${data[idx]["category_$idx"]["color"]}")) : Colors.transparent,
+            data[idx]["category_$idx"] != null ? data[idx]["category_$idx"]["type"] : ""
         ),
     ];
     return chartData;
@@ -81,19 +56,60 @@ class CategoryPageState extends State<CategoryPage>{
 
   @override
   void initState(){
-    _chartData = getCharData();
-    getCategoriesStorage();
+    _chartData = loaded ? getCharData() : [
+      GDPData("none", 0, Colors.transparent, "useful")
+    ];
     super.initState();
   }
 
+
+  getCategoriesStorage() async {
+    var val = await CategoriesRepository().getAllCategories();
+    List categoryData = [
+
+        for(int idx = 0; idx < val.length; idx++){
+          "category_${idx + 1}":{
+            "id": val[val.length - (idx + 1)].id,
+            "indexCategory": val[val.length - (idx + 1)].indexCategory,
+            "title": val[val.length - (idx + 1)].title,
+            "time": val[val.length - (idx + 1)].time,
+            "color": val[val.length - (idx + 1)].color,
+            "icon": val[val.length - (idx + 1)].icon,
+            "type": val[val.length - (idx + 1)].type,
+            "min": val[val.length - (idx + 1)].min,
+            "max": val[val.length - (idx + 1)].max
+          }
+        },
+        for(int jdx = val.length + 1; jdx <= 20; jdx++){
+          "category_$jdx": null,
+        }
+
+    ];
+
+    for(var idx = 0; idx < categoryData.length; idx++){
+      print("000000000000000000000000000--------------${categoryData[idx]}");
+    }
+
+    if(loaded == false){
+      setState((){
+        data = categoryData;
+        loaded = true;
+      });
+    }
+    return categoryData;
+  }
+
+
   @override
   Widget build(BuildContext context){
+    getCategoriesStorage();
+    print("+++++++++++++++++${data}");
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     bool limit = false;
     int categoriesLength = 0;
-    for(var i = 0; i < data[0].length; i++){
-      if(data[0]["category_$i"] != null){
+    for(var i = 0; i < data.length; i++){
+      if(data[i]["category_$i"] != null){
         categoriesLength++;
       }
     }
@@ -105,10 +121,10 @@ class CategoryPageState extends State<CategoryPage>{
       String time = "00:00";
       var minutes = 0, hours = 0;
 
-      for(var timeIDX = 1; timeIDX <= data[0].length; timeIDX++){
-        if(data[0]["category_$timeIDX"] != null){
-          if(data[0]["category_$timeIDX"]["type"] == type){
-            timeStamp += data[0]["category_$timeIDX"]["time"];
+      for(var timeIDX = 1; timeIDX <= data.length; timeIDX++){
+        if(data[timeIDX]["category_$timeIDX"] != null){
+          if(data[timeIDX]["category_$timeIDX"]["type"] == type){
+            timeStamp += data[timeIDX]["category_$timeIDX"]["time"];
           }
         }
       }
@@ -163,36 +179,36 @@ class CategoryPageState extends State<CategoryPage>{
 
       switch(blockPart){
         case 1:
-          if(data[0].length < 4){
-            categoriesNum = data[0].length;
+          if(data.length < 4){
+            categoriesNum = data.length;
           } else {
             categoriesNum = 4;
           }
           break;
         case 2:
-          if(data[0].length < 6){
-            categoriesNum = data[0].length;
+          if(data.length < 6){
+            categoriesNum = data.length;
           } else {
             categoriesNum = 6;
           }
           break;
         case 3:
-          if(data[0].length < 8){
-            categoriesNum = data[0].length;
+          if(data.length < 8){
+            categoriesNum = data.length;
           } else {
             categoriesNum = 8;
           }
           break;
         case 9:
-          if(data[0].length <= 12){
-            categoriesNum = data[0].length;
+          if(data.length <= 12){
+            categoriesNum = data.length;
           } else {
             categoriesNum = 12;
           }
           break;
         case 13:
-          if(data[0].length <= 16){
-            categoriesNum = data[0].length;
+          if(data.length <= 16){
+            categoriesNum = data.length;
           } else {
             categoriesNum = 16;
           }
@@ -204,14 +220,14 @@ class CategoryPageState extends State<CategoryPage>{
       return categoriesNum;
     }
 
-    return Column(
+    return loaded ? Column(
       children: [
         SizedBox(height: screenHeight > 700 ? screenHeight * 0.05 : screenHeight * 0.005),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             for(var index = 1; index <= categoryLength(1); index++)
-              data[0]["category_$index"] != null ? Category(data: data[0]["category_$index"]) :
+              data[index]["category_$index"] != null ? Category(data: data[index]["category_$index"]) :
               !limit ? addCategoryButton() : const SizedBox()
           ],
         ),
@@ -223,7 +239,7 @@ class CategoryPageState extends State<CategoryPage>{
             Column(
               children: [
                 for(var index = 5; index <= categoryLength(2); index++)
-                  data[0]["category_$index"] != null ? Category(data: data[0]["category_$index"]) :
+                  data[index]["category_$index"] != null ? Category(data: data[index]["category_$index"]) :
                   !limit ? addCategoryButton() : const SizedBox()
               ],
             ),
@@ -350,7 +366,7 @@ class CategoryPageState extends State<CategoryPage>{
             Column(
               children: [
                 for(var index = 7; index <= categoryLength(3); index++)
-                  data[0]["category_$index"] != null ? Category(data: data[0]["category_$index"]) :
+                  data[index]["category_$index"] != null ? Category(data: data[index]["category_$index"]) :
                   !limit ? addCategoryButton() : const SizedBox()
               ],
             ),
@@ -366,7 +382,7 @@ class CategoryPageState extends State<CategoryPage>{
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     for(var index = idx; index <= categoryLength(idx); index++)
-                      data[0]["category_$index"] != null ? Category(data: data[0]["category_$index"]) :
+                      data[index]["category_$index"] != null ? Category(data: data[index]["category_$index"]) :
                       !limit ? addCategoryButton() : const SizedBox()
                   ],
                 )
@@ -380,6 +396,6 @@ class CategoryPageState extends State<CategoryPage>{
           ],
         )
       ],
-    );
+    ) : const SizedBox();
   }
 }
