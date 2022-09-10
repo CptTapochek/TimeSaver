@@ -17,7 +17,7 @@ class DBProvider {
 
   initDB() async {
     Directory documentsDirectory = await getApplicationSupportDirectory();
-    String path = join(documentsDirectory.path, "Test2.db");
+    String path = join(documentsDirectory.path, "Test6.db");
     return await openDatabase(path, version: 1, onOpen: (db){}, onCreate: (Database db, int version) async {
       await db.execute(
           "CREATE TABLE Categories("

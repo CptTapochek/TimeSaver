@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:time_saver/screens/NewCategory/Modals/timeLimit.dart';
 import 'package:time_saver/screens/NewCategory/Modals/chooseIconColor.dart';
 import 'package:time_saver/Data/iconsColors.dart';
+import 'package:time_saver/main.dart';
 
 
 class NewCategory extends StatefulWidget {
@@ -105,19 +106,8 @@ class NewCategoryState extends State<NewCategory> {
       } else {
         String mainColorString = mainColor.toString().replaceAll("Color(0xff", "").replaceAll(")", "");
 
-        var data = {
-          "index": widget.index,
-          "title": title,
-          "time": 0,
-          "color": mainColor,
-          "icon": mainIcon,
-          "type": timeType,
-          "min": minTime,
-          "max": maxTime
-        };
-
         final category = CategoriesModel(
-          id: Random().nextInt(100000),
+          id: widget.index,
           indexCategory: widget.index,
           title: title,
           time: 0,
@@ -129,8 +119,9 @@ class NewCategoryState extends State<NewCategory> {
         );
 
         CategoriesRepository().addCategory(category);
-        print(":::::::::::::::::::$data");
-        Navigator.pop(context);
+        Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const MainPage())
+        );
       }
     }
 
