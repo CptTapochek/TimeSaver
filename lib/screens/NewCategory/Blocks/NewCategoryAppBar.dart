@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 
 class AppBarContent extends StatefulWidget {
-  const AppBarContent({Key? key, required this.mainColor, required this.addNewCategory}) : super(key: key);
+  const AppBarContent({Key? key, required this.mainColor, required this.addNewCategory, required this.title}) : super(key: key);
   final Color mainColor;
   final Function addNewCategory;
+  final String title;
 
   @override
   State<AppBarContent> createState() => AppBarContentState();
@@ -38,9 +39,9 @@ class AppBarContentState extends State<AppBarContent> {
                     icon: const Icon(Icons.close_outlined, size: 30,),
                     color: Colors.white
                 ),
-                const Text(
-                  'New category',
-                  style: TextStyle(
+                Text(
+                  widget.title,
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 22,
                       fontWeight: FontWeight.w600,

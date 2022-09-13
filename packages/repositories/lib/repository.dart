@@ -33,4 +33,8 @@ class CategoriesRepository {
         max: e.max
     )).toList();
   }
+
+  Future<void> deleteCategoryId(int id) async {
+    await DBProvider.db.deleteCategory(id);
+  }
 }

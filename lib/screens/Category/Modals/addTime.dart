@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:time_saver/screens/Category/EditCategory.dart';
 
 
 class BottomSheetAddTime extends StatefulWidget{
@@ -66,6 +67,8 @@ class AddTimeState extends State<BottomSheetAddTime> {
       return width;
     }
 
+    print(data);
+
     return Container(
       height: screenHeight * 0.7,
       color: Colors.transparent,
@@ -123,50 +126,46 @@ class AddTimeState extends State<BottomSheetAddTime> {
                           ),
                         ),
                       ),
-                      Container(
-                          margin: const EdgeInsets.only(right: 15),
-                          width: screenWidth * 0.13, height: screenWidth * 0.13,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(screenWidth * 0.035),
-                              color: Colors.white
-                          ),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                child: Center(
-                                  child: SvgPicture.asset("assets/category-icons/${data["icon"]}.svg",
-                                      height: screenWidth * 0.07, width: screenWidth * 0.07, color: Color(int.parse("0xff${data["color"]}"))
+                      TextButton(
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditCategory(data: data))),
+                        style: ButtonStyle(
+                            overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
+                            padding: MaterialStateProperty.resolveWith((states) => EdgeInsets.zero)
+                        ),
+                        child: Container(
+                            margin: const EdgeInsets.only(right: 15),
+                            width: screenWidth * 0.13, height: screenWidth * 0.13,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(screenWidth * 0.035),
+                                color: Colors.white
+                            ),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  child: Center(
+                                    child: SvgPicture.asset("assets/category-icons/${data["icon"]}.svg",
+                                        height: screenWidth * 0.07, width: screenWidth * 0.07, color: Color(int.parse("0xff${data["color"]}"))
+                                    ),
                                   ),
-                                ),
-                              )
-                            ],
-                          )
+                                )
+                              ],
+                            )
+                        ),
                       )
                     ],
                   ),
                 ),
-                Container(
+                SizedBox(
                   height: screenHeight * 0.1,
                   width: screenWidth,
-                  // decoration: BoxDecoration(
-                  //   color: Colors.white,
-                  //   boxShadow: [
-                  //     BoxShadow(
-                  //       color: Colors.grey.withOpacity(0.3),
-                  //       spreadRadius: 1,
-                  //       blurRadius: 8,
-                  //       offset: Offset(0, 3), // changes position of shadow
-                  //     ),
-                  //   ],
-                  // ),
                   child: Center(
                     child: Text(
                       getTime(data["time"], false),
                       style: const TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.w300,
-                        fontFamily: "Inter",
-                        color: Color(0xffC81343)
+                          fontSize: 40,
+                          fontWeight: FontWeight.w300,
+                          fontFamily: "Inter",
+                          color: Color(0xffC81343)
                       ),
                     ),
                   ),
@@ -278,6 +277,7 @@ class AddTimeState extends State<BottomSheetAddTime> {
                     ],
                   )
                 ),
+                const SizedBox(height: 1),
                 const Divider(height: 0, thickness: 1, color: Color(0xffe0e0e0)),
                 const SizedBox(height: 5),
                 TextButton(

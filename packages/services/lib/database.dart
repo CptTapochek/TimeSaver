@@ -17,7 +17,7 @@ class DBProvider {
 
   initDB() async {
     Directory documentsDirectory = await getApplicationSupportDirectory();
-    String path = join(documentsDirectory.path, "Test6.db");
+    String path = join(documentsDirectory.path, "Test7.db");
     return await openDatabase(path, version: 1, onOpen: (db){}, onCreate: (Database db, int version) async {
       await db.execute(
           "CREATE TABLE Categories("
@@ -52,5 +52,10 @@ class DBProvider {
     List<DBCategories> list = res.isNotEmpty ? res.map((e) => DBCategories.fromMap(e)).toList() : [];
 
     return list;
+  }
+
+  deleteCategory(int id) async {
+    final db = await database;
+    return db.delete("Categories", where: "id = ?", whereArgs: [id]);
   }
 }

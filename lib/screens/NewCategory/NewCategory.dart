@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:models/categories_models.dart';
 import 'package:repositories/repository.dart';
@@ -133,7 +132,7 @@ class NewCategoryState extends State<NewCategory> {
           decoration: BoxDecoration(
             color: mainColor,
           ),
-          child: AppBarContent(mainColor: mainColor, addNewCategory: addNewCategory),
+          child: AppBarContent(mainColor: mainColor, addNewCategory: addNewCategory, title: "New category",),
         ),
       ),
       body: GestureDetector(
@@ -180,7 +179,7 @@ class NewCategoryState extends State<NewCategory> {
                                           fontSize: 18
                                       ),
                                       textCapitalization: TextCapitalization.sentences,
-                                      maxLength: 40,
+                                      maxLength: 35,
                                       decoration: InputDecoration(
                                         alignLabelWithHint: _focusNode.hasFocus ? true : true,
                                         labelText: "Title",

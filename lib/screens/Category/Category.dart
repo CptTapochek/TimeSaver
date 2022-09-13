@@ -137,9 +137,7 @@ class CategoryPageState extends State<CategoryPage>{
       });
       return TextButton(
           style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => NewCategory(index: categoriesLength)));
-          },
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NewCategory(index: categoriesLength))),
           child: Column(
             children: [
               SizedBox(
