@@ -34,6 +34,21 @@ class CategoriesRepository {
     )).toList();
   }
 
+  Future editCategory(CategoriesModel categories) async {
+    final result = await DBProvider.db.editCategory(DBCategories(
+        id: categories.id,
+        indexCategory: categories.indexCategory,
+        title: categories.title,
+        time: categories.time,
+        color: categories.color,
+        icon: categories.icon,
+        type: categories.type,
+        min: categories.min,
+        max: categories.max)
+    );
+    return result;
+  }
+
   Future<void> deleteCategoryId(int id) async {
     await DBProvider.db.deleteCategory(id);
   }

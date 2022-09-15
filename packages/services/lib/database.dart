@@ -58,4 +58,15 @@ class DBProvider {
     final db = await database;
     return db.delete("Categories", where: "id = ?", whereArgs: [id]);
   }
+
+  editCategory(DBCategories categories) async {
+    final db = await database;
+    var res = await db.update(
+      "Categories",
+      categories.toMap(),
+      where: "id = ?",
+      whereArgs: [categories.id]
+    );
+    return res;
+  }
 }

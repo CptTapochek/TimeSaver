@@ -24,19 +24,25 @@ class EditCategoryState extends State<EditCategory> {
   String mainIcon = "";
   final FocusNode _focusNode = FocusNode();
   Color labelTextColor = const Color(0xffffffff);
-  var dropDownValue = "Useful";
+  var dropDownValue = "";
   String title = "";
   String timeType = "";
   Color dropDownColor = const Color(0xff000000);
   int maxTime = 0, minTime = 0;
   bool validateTitle = true;
   late TextEditingController _controller;
+  int historyCount = 0;
 
   @override
   void initState() {
     data = widget.data;
     title = data["title"];
     timeType = data["type"];
+    switch(timeType){
+      case "useful": dropDownValue = "Useful"; break;
+      case "wasted": dropDownValue = "Wasted"; break;
+      case "rest": dropDownValue = "Rest"; break;
+    }
     mainColor = Color(int.parse("0xff${data["color"]}"));
     mainIcon = data["icon"];
     maxTime = data["max"]; minTime = data["min"];
@@ -110,6 +116,17 @@ class EditCategoryState extends State<EditCategory> {
       } else {
         String mainColorString = mainColor.toString().replaceAll("Color(0xff", "").replaceAll(")", "");
 
+        CategoriesRepository().editCategory(CategoriesModel(
+            id: data["id"],
+            indexCategory: data["indexCategory"],
+            title: title,
+            time: data["time"],
+            color: mainColorString,
+            icon: mainIcon,
+            type: timeType,
+            min: minTime,
+            max: maxTime)
+        );
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const MainPage())
         );
@@ -384,33 +401,103 @@ class EditCategoryState extends State<EditCategory> {
                                             context: context,
                                             builder: (BuildContext context){
                                               return AlertDialog(
+                                                contentPadding: EdgeInsets.zero,
+                                                insetPadding: EdgeInsets.zero,
                                                 content: Container(
-                                                  height: 150,
+                                                  height: 220,
                                                   width: screenWidth * 0.9,
-                                                  color: Colors.white,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius: BorderRadius.circular(15)
+                                                  ),
                                                   child: Stack(
                                                     children: [
                                                       Container(
-                                                        margin: const EdgeInsets.all(15),
+                                                        margin: const EdgeInsets.all(20),
                                                         child: Column(
                                                           children: [
-                                                            Row()
+                                                            Row(
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 40, width: 40,
+                                                                  child: Stack(
+                                                                    children: [
+                                                                      Container(
+                                                                        decoration: BoxDecoration(
+                                                                          color: mainColor,
+                                                                          borderRadius: BorderRadius.circular(10)
+                                                                        ),
+                                                                      ),
+                                                                      Positioned(
+                                                                        child: Center(
+                                                                          child: SvgPicture.asset(
+                                                                            "assets/category-icons/$mainIcon.svg",
+                                                                            width: 20, height: 20,
+                                                                          ),
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                const SizedBox(width: 10),
+                                                                SizedBox(
+                                                                  width: screenWidth * 0.65,
+                                                                  child: Text(
+                                                                    "Delete $title ?",
+                                                                    maxLines: 2,
+                                                                    overflow: TextOverflow.ellipsis,
+                                                                    style: const TextStyle(
+                                                                        fontFamily: "Inter",
+                                                                        fontSize: 15,
+                                                                        fontWeight: FontWeight.bold
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                            Container(
+                                                              margin: const EdgeInsets.only(top: 20),
+                                                              child: Text(
+                                                                "All historical operations ($historyCount) associated with the category will be deleted.",
+                                                                style: const TextStyle(
+                                                                  color: Color(0xff919191),
+                                                                  fontFamily: "Inter",
+                                                                  fontSize: 14,
+                                                                  fontWeight: FontWeight.w400
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              margin: const EdgeInsets.only(top: 20),
+                                                              child: const Text(
+                                                                "The category cannot be restored. Are you sure you want to delete the category?",
+                                                                style: TextStyle(
+                                                                    color: Color(0xff919191),
+                                                                    fontFamily: "Inter",
+                                                                    fontSize: 14,
+                                                                    fontWeight: FontWeight.w400
+                                                                ),
+                                                              ),
+                                                            )
                                                           ],
                                                         ),
                                                       ),
                                                       Positioned(
-                                                        bottom: -15, right: 0,
+                                                        bottom: 0, right: 20,
                                                         child: Row(
                                                           children: [
                                                             TextButton(
                                                               onPressed: () => Navigator.pop(context),
-                                                              child: Text(
+                                                              style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => const Color(0xffd5d5d5))),
+                                                              child: const Text(
                                                                 "Cancel",
                                                                 style: TextStyle(
-                                                                  color: Colors.grey
+                                                                  color: Colors.grey,
+                                                                  fontFamily: "Inter"
                                                                 ),
                                                               ),
                                                             ),
+                                                            const SizedBox(width: 20),
                                                             TextButton(
                                                               onPressed: () {
                                                                 CategoriesRepository().deleteCategoryId(data["id"]);
@@ -418,10 +505,12 @@ class EditCategoryState extends State<EditCategory> {
                                                                     MaterialPageRoute(builder: (context) => const MainPage())
                                                                 );
                                                               },
-                                                              child: Text(
+                                                              style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => const Color(0xffd5d5d5))),
+                                                              child: const Text(
                                                                 "Delete",
                                                                 style: TextStyle(
-                                                                    color: Colors.redAccent
+                                                                  color: Colors.redAccent,
+                                                                  fontFamily: "Inter"
                                                                 ),
                                                               ),
                                                             ),

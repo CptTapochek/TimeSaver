@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:models/categories_models.dart';
+import 'package:repositories/repository.dart';
 import 'package:time_saver/screens/Category/EditCategory.dart';
+
+import '../../../main.dart';
 
 
 class BottomSheetAddTime extends StatefulWidget{
@@ -67,7 +71,18 @@ class AddTimeState extends State<BottomSheetAddTime> {
       return width;
     }
 
-    print(data);
+    int getTimeInSeconds(){
+      int seconds = data["time"], min = 0;
+      if(hours > 0){
+        min = hours * 60;
+      }
+      if(min > 0 || minutes > 0){
+        seconds += (min + minutes) * 60;
+      }
+
+      return seconds;
+    }
+
 
     return Container(
       height: screenHeight * 0.7,
@@ -283,7 +298,20 @@ class AddTimeState extends State<BottomSheetAddTime> {
                 TextButton(
                   style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
                   onPressed: (){
-                    Navigator.pop(context);
+                    CategoriesRepository().editCategory(CategoriesModel(
+                        id: data["id"],
+                        indexCategory: data["indexCategory"],
+                        title: data["title"],
+                        time: getTimeInSeconds(),
+                        color: data["color"],
+                        icon: data["icon"],
+                        type: data["type"],
+                        min: data["min"],
+                        max: data["max"])
+                    );
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const MainPage())
+                    );
                   },
                   child: SizedBox(
                     height: screenHeight * 0.057, width: screenWidth * 0.5,
