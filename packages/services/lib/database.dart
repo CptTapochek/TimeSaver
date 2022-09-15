@@ -17,7 +17,7 @@ class DBProvider {
 
   initDB() async {
     Directory documentsDirectory = await getApplicationSupportDirectory();
-    String path = join(documentsDirectory.path, "Test7.db");
+    String path = join(documentsDirectory.path, "TimeSaver.db");
     return await openDatabase(path, version: 1, onOpen: (db){}, onCreate: (Database db, int version) async {
       await db.execute(
           "CREATE TABLE Categories("
@@ -30,6 +30,13 @@ class DBProvider {
               "type TEXT, "
               "min INTEGER, "
               "max INTEGER"
+          "),"
+          "CREATE TABLE History("
+              "id INTEGER PRIMARY KEY, "
+              "categoryId INTEGER, "
+              "time INTEGER, "
+              "date INTEGER, "
+              "note TEXT, "
           ")"
       );
     });

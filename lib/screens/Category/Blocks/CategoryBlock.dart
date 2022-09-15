@@ -4,8 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 
 class Category extends StatefulWidget {
-  const Category({Key? key, required this.data}) : super(key: key);
+  const Category({Key? key, required this.data, required this.reloadState}) : super(key: key);
   final Map<dynamic, dynamic> data;
+  final Function reloadState;
 
   @override
   State<Category> createState() => CategoryState();
@@ -53,7 +54,7 @@ class CategoryState extends State<Category> {
             showModalBottomSheet<void>(
               context: context,
               builder: (BuildContext context){
-                  return BottomSheetAddTime(context, data: data,);
+                  return BottomSheetAddTime(context, data: data, reloadState: widget.reloadState);
                 }
             );
           },

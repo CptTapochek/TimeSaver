@@ -4,10 +4,18 @@ import 'package:time_saver/Data/iconsColors.dart';
 
 
 class ChooseIconColor extends StatefulWidget{
-  const ChooseIconColor(BuildContext context, {Key? key ,this.colorData, this.mainIcon, required this.changeState}) : super(key: key);
+  const ChooseIconColor(BuildContext context, {
+    Key? key,
+    this.colorData,
+    this.mainIcon,
+    required this.changeState,
+    this.existCategoryColor
+  }) : super(key: key);
+
   final dynamic colorData;
   final dynamic mainIcon;
   final Function changeState;
+  final existCategoryColor;
 
   @override
   State<ChooseIconColor> createState() => ChooseIconColorState();
@@ -26,7 +34,11 @@ class ChooseIconColorState extends State<ChooseIconColor> {
   @override
   void initState(){
     hours; minutes;
-    mainColor = widget.colorData["pallet"];
+    if(widget.existCategoryColor != null){
+      mainColor = widget.existCategoryColor;
+    } else {
+      mainColor = widget.colorData["pallet"];
+    }
     mainColorCategory = widget.colorData["color"];
     mainIcon = widget.mainIcon;
 

@@ -583,7 +583,13 @@ class EditCategoryState extends State<EditCategory> {
                               showDialog<void>(
                                 context: context,
                                 builder: (BuildContext context){
-                                  return ChooseIconColor(context, colorData: colorData, mainIcon: mainIcon, changeState: changeState);
+                                  return ChooseIconColor(
+                                    context,
+                                    colorData: colorData,
+                                    mainIcon: mainIcon,
+                                    changeState: changeState,
+                                    existCategoryColor: mainColor
+                                  );
                                 }
                               );
                             },

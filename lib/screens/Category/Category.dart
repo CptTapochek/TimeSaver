@@ -30,6 +30,7 @@ class CategoryPageState extends State<CategoryPage>{
   int restTime = 0;
   List data = [{"category_0": null} ,{"category_1": null}];
   bool loaded = false;
+  bool reload = false;
 
   List<GDPData> getCharData() {
     final List<GDPData> chartData = [
@@ -59,11 +60,9 @@ class CategoryPageState extends State<CategoryPage>{
     super.initState();
   }
 
-
   getCategoriesStorage() async {
     var val = await CategoriesRepository().getAllCategories();
     List categoryData = [
-
         for(int idx = 0; idx < val.length; idx++){
           "category_${idx + 1}":{
             "id": val[idx].id,
@@ -90,10 +89,46 @@ class CategoryPageState extends State<CategoryPage>{
     return categoryData;
   }
 
+  resetCategoryStorage() async {
+    var res = await CategoriesRepository().getAllCategories();
+    List categoryData = [
+      for(int idx = 0; idx < res.length; idx++){
+        "category_${idx + 1}":{
+          "id": res[idx].id,
+          "indexCategory": res[idx].indexCategory,
+          "title": res[idx].title,
+          "time": res[idx].time,
+          "color": res[idx].color,
+          "icon": res[idx].icon,
+          "type": res[idx].type,
+          "min": res[idx].min,
+          "max": res[idx].max
+        }
+      },
+      for(int jdx = res.length + 1; jdx <= 20; jdx++){
+        "category_$jdx": null,
+      }
+    ];
+    if(reload == true){
+      print("Reload dates");
+      setState((){
+        data = categoryData;
+        reload = false;
+      });
+    }
+  }
+
+  setReloadState() {
+    setState((){
+      reload = true;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context){
     getCategoriesStorage();
+    resetCategoryStorage();
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     bool limit = false;
@@ -103,7 +138,7 @@ class CategoryPageState extends State<CategoryPage>{
         categoriesLength++;
       }
     }
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>$screenWidth $screenHeight");
+    print(">>>>>>>>>>>>>>>>>>SCREEN-SIZE>>>>>>>>>>>>>>>>>>$screenWidth $screenHeight");
 
     /* Get type of time */
     String timeType(type){
@@ -215,7 +250,8 @@ class CategoryPageState extends State<CategoryPage>{
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             for(var index = 0; index <= categoryLength(1); index++)
-              data[index]["category_${index + 1}"] != null ? Category(data: data[index]["category_${index + 1}"]) :
+              data[index]["category_${index + 1}"] != null ?
+              Category(data: data[index]["category_${index + 1}"], reloadState: setReloadState) :
               !limit ? addCategoryButton() : const SizedBox()
           ],
         ),
@@ -227,7 +263,8 @@ class CategoryPageState extends State<CategoryPage>{
             Column(
               children: [
                 for(var index = 4; index <= categoryLength(2); index++)
-                  data[index]["category_${index + 1}"] != null ? Category(data: data[index]["category_${index + 1}"]) :
+                  data[index]["category_${index + 1}"] != null ?
+                  Category(data: data[index]["category_${index + 1}"], reloadState: setReloadState) :
                   !limit ? addCategoryButton() : const SizedBox()
               ],
             ),
@@ -354,7 +391,8 @@ class CategoryPageState extends State<CategoryPage>{
             Column(
               children: [
                 for(var index = 6; index <= categoryLength(3); index++)
-                  data[index]["category_${index + 1}"] != null ? Category(data: data[index]["category_${index + 1}"]) :
+                  data[index]["category_${index + 1}"] != null ?
+                  Category(data: data[index]["category_${index + 1}"], reloadState: setReloadState) :
                   !limit ? addCategoryButton() : const SizedBox()
               ],
             ),
@@ -370,7 +408,8 @@ class CategoryPageState extends State<CategoryPage>{
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     for(var index = idx; index <= categoryLength(idx); index++)
-                      data[index]["category_${index + 1}"] != null ? Category(data: data[index]["category_${index + 1}"]) :
+                      data[index]["category_${index + 1}"] != null ?
+                      Category(data: data[index]["category_${index + 1}"], reloadState: setReloadState) :
                       !limit ? addCategoryButton() : const SizedBox()
                   ],
                 )

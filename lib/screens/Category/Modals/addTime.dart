@@ -4,13 +4,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:models/categories_models.dart';
 import 'package:repositories/repository.dart';
 import 'package:time_saver/screens/Category/EditCategory.dart';
-
 import '../../../main.dart';
 
 
 class BottomSheetAddTime extends StatefulWidget{
-  const BottomSheetAddTime(BuildContext context, {Key? key,  required this.data}) : super(key: key);
+  const BottomSheetAddTime(BuildContext context, {Key? key,  required this.data, required this.reloadState}) : super(key: key);
   final Map<dynamic, dynamic> data;
+  final Function reloadState;
 
   @override
   State<BottomSheetAddTime> createState() => AddTimeState();
@@ -309,9 +309,11 @@ class AddTimeState extends State<BottomSheetAddTime> {
                         min: data["min"],
                         max: data["max"])
                     );
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const MainPage())
-                    );
+                    widget.reloadState();
+                    Navigator.pop(context);
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => const MainPage())
+                    // );
                   },
                   child: SizedBox(
                     height: screenHeight * 0.057, width: screenWidth * 0.5,
