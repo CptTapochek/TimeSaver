@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:time_saver/Blocks/AppBar.dart';
 import 'package:time_saver/screens/Category/Category.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:time_saver/screens/History/HistoryList.dart';
 
 
 void main() {
@@ -42,9 +43,8 @@ class MainPageState extends State<MainPage> {
 
   int selectedIndex = 1;
   static final List<Widget> _widgetOptions = <Widget>[
-    const Text(
-      'Index 0: History',
-      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+    const SingleChildScrollView(
+        child: HistoryList()
     ),
     const SingleChildScrollView(
       child: CategoryPage()
