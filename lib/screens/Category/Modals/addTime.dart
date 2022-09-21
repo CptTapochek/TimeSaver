@@ -4,7 +4,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:models/categories_models.dart';
 import 'package:repositories/repository.dart';
 import 'package:time_saver/screens/Category/EditCategory.dart';
-import '../../../main.dart';
 
 
 class BottomSheetAddTime extends StatefulWidget{

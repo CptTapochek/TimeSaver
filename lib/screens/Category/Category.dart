@@ -110,7 +110,6 @@ class CategoryPageState extends State<CategoryPage>{
       }
     ];
     if(reload == true){
-      print("Reload dates");
       setState((){
         data = categoryData;
         reload = false;
