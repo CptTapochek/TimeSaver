@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-void editCategories(){
-  print('Edit categories');
-}
 
 class AppBarContent extends StatefulWidget {
-  const AppBarContent({Key? key}) : super(key: key);
+  const AppBarContent({Key? key, required this.editState}) : super(key: key);
+  final Function editState;
 
   @override
   State<AppBarContent> createState() => AppBarContentState();
 }
 
 class AppBarContentState extends State<AppBarContent> {
+  bool closeEditState = false;
+
   @override
   void initState(){
     super.initState();
@@ -29,9 +29,9 @@ class AppBarContentState extends State<AppBarContent> {
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const <Widget>[
-                IconButton(onPressed: editCategories, icon: Icon(Icons.menu_rounded), color: Colors.white),
-                Text(
+              children: <Widget>[
+                IconButton(onPressed: (){}, icon: const Icon(Icons.menu_rounded), color: Colors.white),
+                const Text(
                   '1Day',
                   style: TextStyle(
                       color: Colors.white,
@@ -40,7 +40,16 @@ class AppBarContentState extends State<AppBarContent> {
                       fontFamily: "Inter"
                   ),
                 ),
-                IconButton(onPressed: editCategories, icon: Icon(Icons.edit), color: Colors.white),
+                IconButton(
+                    onPressed: () {
+                      widget.editState();
+                      setState((){
+                        closeEditState = !closeEditState;
+                      });
+                    },
+                    icon: closeEditState ? const Icon(Icons.close_rounded) : const Icon(Icons.edit),
+                    color: Colors.white
+                ),
               ],
             ),
           ),
@@ -50,12 +59,12 @@ class AppBarContentState extends State<AppBarContent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 TextButton(
-                  onPressed: editCategories,
+                  onPressed: (){},
                   style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
                   child: const Icon(Icons.arrow_back_ios, color: Colors.white),
                 ),
                 ElevatedButton(
-                    onPressed: editCategories,
+                    onPressed: (){},
                     style: ButtonStyle(
                       overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
                       backgroundColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
@@ -100,7 +109,7 @@ class AppBarContentState extends State<AppBarContent> {
                     )
                 ),
                 TextButton(
-                  onPressed: editCategories,
+                  onPressed: (){},
                   style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
                   child: const Icon(Icons.arrow_forward_ios, color: Colors.white),
                 ),

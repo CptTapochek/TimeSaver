@@ -35,28 +35,37 @@ class MainPage extends StatefulWidget {
 
 class MainPageState extends State<MainPage> {
   Color mainColor = const Color(0xff5c6ac0);
+  bool editCategories = false;
 
   @override
   void initState(){
     super.initState();
   }
 
+  void editCategoriesState(){
+    setState((){
+      editCategories = !editCategories;
+    });
+  }
+
   int selectedIndex = 1;
-  static final List<Widget> _widgetOptions = <Widget>[
-    const SingleChildScrollView(
-        child: HistoryList()
-    ),
-    const SingleChildScrollView(
-      child: CategoryPage()
-    ),
-    const Text(
-      'Index 2: Overview',
-      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-    ),
-  ];
+
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _widgetOptions = <Widget>[
+      const SingleChildScrollView(
+          child: HistoryList()
+      ),
+      SingleChildScrollView(
+          child: CategoryPage(editCategories: editCategories)
+      ),
+      const Text(
+        'Index 2: Overview',
+        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      ),
+    ];
+
     void getBottomTap(int index) {
       setState(() {
         selectedIndex = index;
@@ -73,7 +82,7 @@ class MainPageState extends State<MainPage> {
               begin: Alignment.centerLeft, end: Alignment.bottomRight
             )
           ),
-          child: const AppBarContent(),
+          child: AppBarContent(editState: editCategoriesState),
         ),
       ),
       body: _widgetOptions.elementAt(selectedIndex),

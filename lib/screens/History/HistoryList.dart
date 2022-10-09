@@ -78,6 +78,31 @@ class HistoryListState extends State<HistoryList> {
     super.initState();
   }
 
+  sortingData(List data, int length, String type) {
+    if(type == "asc"){
+      for(int i = 0; i < length; i++){
+        for(int j = 0; j < length - i - 1; j++){
+          if(data[j]["date"] > data[j + 1]["date"]){
+            var tmp = data[j];
+            data[j] = data[j + 1];
+            data[j + 1] = tmp;
+          }
+        }
+      }
+    } else if(type == "desc"){
+      for(int i = 0; i < length; i++){
+        for(int j = 0; j < length - i - 1; j++){
+          if(data[j]["date"] < data[j + 1]["date"]){
+            var tmp = data[j];
+            data[j] = data[j + 1];
+            data[j + 1] = tmp;
+          }
+        }
+      }
+    }
+    return data;
+  }
+
   createTransactionsList() {
     if(categories != null && transactions != null){
       transactionsList = [
@@ -93,6 +118,7 @@ class HistoryListState extends State<HistoryList> {
                 "catType": categories[jdx]["type"]
               }
       ];
+      sortingData(transactionsList, transactionsList.length, "asc");
     }
   }
 

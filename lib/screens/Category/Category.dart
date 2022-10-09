@@ -17,7 +17,8 @@ class GDPData{
 
 
 class CategoryPage extends StatefulWidget {
-  const CategoryPage({Key? key}) : super(key: key);
+  const CategoryPage({Key? key, required this.editCategories}) : super(key: key);
+  final bool editCategories;
 
   @override
   State<CategoryPage> createState() => CategoryPageState();
@@ -44,9 +45,7 @@ class CategoryPageState extends State<CategoryPage>{
             data[idx]["category_${idx + 1}"] != null ? data[idx]["category_${idx + 1}"]["time"] : 0,
             data[idx]["category_${idx + 1}"] != null ? Color(int.parse("0xff${data[idx]["category_${idx + 1}"]["color"]}")) : Colors.transparent,
             data[idx]["category_${idx + 1}"] != null ? data[idx]["category_${idx + 1}"]["type"] : ""
-        ) : GDPData(
-            "none", 1, const Color(0xffc2c2c2), "none"
-        ),
+        ) : GDPData("none", 1, const Color(0xffc2c2c2), "none"),
     ];
 
     return chartData;
@@ -250,7 +249,7 @@ class CategoryPageState extends State<CategoryPage>{
           children: [
             for(var index = 0; index <= categoryLength(1); index++)
               data[index]["category_${index + 1}"] != null ?
-              Category(data: data[index]["category_${index + 1}"], reloadState: setReloadState) :
+              Category(data: data[index]["category_${index + 1}"], reloadState: setReloadState, editCategory: widget.editCategories) :
               !limit ? addCategoryButton() : const SizedBox()
           ],
         ),
@@ -263,7 +262,7 @@ class CategoryPageState extends State<CategoryPage>{
               children: [
                 for(var index = 4; index <= categoryLength(2); index++)
                   data[index]["category_${index + 1}"] != null ?
-                  Category(data: data[index]["category_${index + 1}"], reloadState: setReloadState) :
+                  Category(data: data[index]["category_${index + 1}"], reloadState: setReloadState, editCategory: widget.editCategories) :
                   !limit ? addCategoryButton() : const SizedBox()
               ],
             ),
@@ -391,7 +390,7 @@ class CategoryPageState extends State<CategoryPage>{
               children: [
                 for(var index = 6; index <= categoryLength(3); index++)
                   data[index]["category_${index + 1}"] != null ?
-                  Category(data: data[index]["category_${index + 1}"], reloadState: setReloadState) :
+                  Category(data: data[index]["category_${index + 1}"], reloadState: setReloadState, editCategory: widget.editCategories) :
                   !limit ? addCategoryButton() : const SizedBox()
               ],
             ),
@@ -408,7 +407,7 @@ class CategoryPageState extends State<CategoryPage>{
                   children: [
                     for(var index = idx; index <= categoryLength(idx); index++)
                       data[index]["category_${index + 1}"] != null ?
-                      Category(data: data[index]["category_${index + 1}"], reloadState: setReloadState) :
+                      Category(data: data[index]["category_${index + 1}"], reloadState: setReloadState, editCategory: widget.editCategories) :
                       !limit ? addCategoryButton() : const SizedBox()
                   ],
                 )

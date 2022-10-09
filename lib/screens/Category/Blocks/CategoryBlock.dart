@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:time_saver/screens/Category/EditCategory.dart';
 import 'package:time_saver/screens/Category/Modals/addTime.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_shake_animated/flutter_shake_animated.dart';
 
 
 class Category extends StatefulWidget {
-  const Category({Key? key, required this.data, required this.reloadState}) : super(key: key);
+  const Category({Key? key, required this.data, required this.reloadState, required this.editCategory}) : super(key: key);
   final Map<dynamic, dynamic> data;
   final Function reloadState;
+  final bool editCategory;
 
   @override
   State<Category> createState() => CategoryState();
@@ -46,69 +49,77 @@ class CategoryState extends State<Category> {
       return height;
     }
 
-    return Container(
-        margin: EdgeInsets.only(left: 2, bottom: getBlockHeight()),
-        child: TextButton(
-          style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
-          onPressed: () {
-            showModalBottomSheet<void>(
-              context: context,
-              builder: (BuildContext context){
-                  return BottomSheetAddTime(context, data: data, reloadState: widget.reloadState);
-                }
-            );
-          },
-          child: Column(
-            children: [
-              SizedBox(
-                width: screenWidth * 0.2,
-                child: Center(
-                    child: RichText(
-                      overflow: TextOverflow.ellipsis,
-                      text: TextSpan(
-                        text: data["title"],
-                        style: TextStyle(
-                            fontFamily: "Inter",
-                            color: Colors.grey[900],
-                            fontWeight: FontWeight.w400,
-                            fontSize: screenWidth * 0.036
-                        ),
-                      ),
-                    )
-                ),
-              ),
-              const SizedBox(height: 5),
-              Container(
-                width: screenWidth * 0.14, height: screenWidth * 0.14,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(screenWidth * 0.04),
-                  color: Color(int.parse("0xff${data["color"]}")),
-                ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      child: Center(
-                        child: SvgPicture.asset("assets/category-icons/${data["icon"]}.svg",
-                          height: screenWidth * 0.075, width: screenWidth * 0.075, color: Colors.white
+    return ShakeWidget(
+      shakeConstant: ShakeLittleConstant2(),
+      autoPlay: widget.editCategory,
+      child: Container(
+          margin: EdgeInsets.only(left: 2, bottom: getBlockHeight()),
+          child: TextButton(
+            style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
+            onPressed: () {
+              if(widget.editCategory == false) {
+                showModalBottomSheet<void>(
+                    context: context,
+                    builder: (BuildContext context){
+                      return BottomSheetAddTime(context, data: data, reloadState: widget.reloadState);
+                    }
+                );
+              } else {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => EditCategory(data: data)));
+              }
+            },
+            child: Column(
+              children: [
+                SizedBox(
+                  width: screenWidth * 0.2,
+                  child: Center(
+                      child: RichText(
+                        overflow: TextOverflow.ellipsis,
+                        text: TextSpan(
+                          text: data["title"],
+                          style: TextStyle(
+                              fontFamily: "Inter",
+                              color: Colors.grey[900],
+                              fontWeight: FontWeight.w400,
+                              fontSize: screenWidth * 0.036
+                          ),
                         ),
                       )
-                    )
-                  ],
-                )
-              ),
-              const SizedBox(height: 5),
-              Text(
-                '${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes',
-                style: TextStyle(
-                  fontFamily: "Inter",
-                  fontWeight: FontWeight.w600,
-                  color: Color(int.parse("0xff${data["color"]}")),
-                  fontSize: screenWidth * 0.036
+                  ),
                 ),
-              )
-            ],
-          ),
-        )
+                const SizedBox(height: 5),
+                Container(
+                    width: screenWidth * 0.14, height: screenWidth * 0.14,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.04),
+                      color: Color(int.parse("0xff${data["color"]}")),
+                    ),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                            child: Center(
+                              child: SvgPicture.asset("assets/category-icons/${data["icon"]}.svg",
+                                  height: screenWidth * 0.075, width: screenWidth * 0.075, color: Colors.white
+                              ),
+                            )
+                        )
+                      ],
+                    )
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  '${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes',
+                  style: TextStyle(
+                      fontFamily: "Inter",
+                      fontWeight: FontWeight.w600,
+                      color: Color(int.parse("0xff${data["color"]}")),
+                      fontSize: screenWidth * 0.036
+                  ),
+                )
+              ],
+            ),
+          )
+      ),
     );
   }
 }
