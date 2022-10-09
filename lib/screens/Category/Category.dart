@@ -5,8 +5,6 @@ import 'package:time_saver/screens/Category/Blocks/CategoryBlock.dart';
 import 'package:time_saver/screens/NewCategory/NewCategory.dart';
 
 
-late List<GDPData> _chartData;
-
 class GDPData{
   GDPData(this.categoryTitle, this.gdp, this.colors, this.type);
   final String categoryTitle;
@@ -14,7 +12,6 @@ class GDPData{
   final Color colors;
   final String type;
 }
-
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({Key? key, required this.editCategories}) : super(key: key);
@@ -32,30 +29,25 @@ class CategoryPageState extends State<CategoryPage>{
   List data = [{"category_0": null} ,{"category_1": null}];
   bool loaded = false;
   bool reload = false;
+  List<GDPData> _chartData = [];
 
   List<GDPData> getCharData() {
     final List<GDPData> chartData = [
-      for(int idx = 0; idx <= data.length; idx++)
+      for(int idx = 0; idx < data.length; idx++)
         idx == 0 && data[idx]["category_${idx + 1}"] == null ?
+        GDPData("none", 1, const Color(0xffc2c2c2), "none") :
         GDPData(
-            "none", 1, const Color(0xffc2c2c2), "none"
-        ) :
-        loaded ? GDPData(
             data[idx]["category_${idx + 1}"] != null ? data[idx]["category_${idx + 1}"]["title"] : "",
             data[idx]["category_${idx + 1}"] != null ? data[idx]["category_${idx + 1}"]["time"] : 0,
             data[idx]["category_${idx + 1}"] != null ? Color(int.parse("0xff${data[idx]["category_${idx + 1}"]["color"]}")) : Colors.transparent,
             data[idx]["category_${idx + 1}"] != null ? data[idx]["category_${idx + 1}"]["type"] : ""
-        ) : GDPData("none", 1, const Color(0xffc2c2c2), "none"),
+        )
     ];
-
     return chartData;
   }
 
   @override
   void initState(){
-    loaded ? _chartData = [
-      GDPData("none", 0, Colors.transparent, "useful")
-    ] : _chartData = getCharData();
     super.initState();
   }
 
@@ -125,6 +117,12 @@ class CategoryPageState extends State<CategoryPage>{
 
   @override
   Widget build(BuildContext context){
+    if(loaded){
+      setState((){
+        _chartData = getCharData();
+      });
+    }
+
     getCategoriesStorage();
     resetCategoryStorage();
     var screenHeight = MediaQuery.of(context).size.height;
@@ -272,7 +270,7 @@ class CategoryPageState extends State<CategoryPage>{
               height: screenWidth * 0.5,
               child: Stack(
                 children: [
-                  SfCircularChart(
+                  loaded ? SfCircularChart(
                     series: <CircularSeries>[
                       DoughnutSeries<GDPData, String>(
                           dataSource: _chartData,
@@ -285,7 +283,7 @@ class CategoryPageState extends State<CategoryPage>{
                           radius: '${screenWidth * 0.24}'
                       ),
                     ],
-                  ),
+                  ) : const SizedBox(),
                   Positioned.fill(
                     child: Align(
                         alignment: Alignment.center,
